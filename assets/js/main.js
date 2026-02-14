@@ -37,7 +37,8 @@ if (hamburgerBtn && dropdownMenu) {
 function getMaxScroll() {
     const containerWidth = cardsContainer.parentElement.clientWidth;
     const contentWidth = cardsContainer.scrollWidth;
-    return Math.max(0, (contentWidth - containerWidth));
+    const containerPadding = 40; // جمع padding دو طرف (20px چپ + 20px راست)
+    return Math.max(0, (contentWidth - containerWidth + containerPadding));
 }
 
 // تابع انیمیشن نرم با requestAnimationFrame
@@ -45,7 +46,7 @@ function animateScroll() {
     // حرکت نرم به سمت targetPosition
     const diff = targetPosition - position;
     if (Math.abs(diff) > 0.5) {
-        position += diff * 0.08; // کاهش بیشتر ضریب برای حرکت نرم‌تر
+        position += diff * 0.08;
         cardsContainer.style.transform = `translateX(${position}px)`;
         animationFrame = requestAnimationFrame(animateScroll);
     } else {
@@ -57,7 +58,7 @@ function animateScroll() {
 
 // تابع برای حرکت نرم با محدودیت
 function smoothMove(direction) {
-    const step = 30; // کاهش سرعت به نصف (از 60 به 30)
+    const step = 30;
     const max = getMaxScroll();
     
     if (direction > 0) { // اسکرول به پایین (حرکت به چپ)
@@ -66,7 +67,7 @@ function smoothMove(direction) {
         targetPosition += step;
     }
     
-    // محدود کردن به محدوده مجاز (بدون لوپ بی‌نهایت)
+    // محدود کردن با فاصله یکسان از دیواره‌ها
     if (targetPosition < -max) {
         targetPosition = -max;
     }
@@ -82,31 +83,27 @@ function smoothMove(direction) {
 
 // رویداد اسکرول ماوس
 window.addEventListener("wheel", (e) => {
-    e.preventDefault(); // جلوگیری از اسکرول عمودی
+    e.preventDefault();
     
-    // حرکت بر اساس جهت اسکرول
     if (e.deltaY > 0) {
-        smoothMove(1); // حرکت به چپ
+        smoothMove(1);
     } else {
-        smoothMove(-1); // حرکت به راست
+        smoothMove(-1);
     }
     
-    // نشانه‌گذاری برای توقف اسکرول
     isScrolling = true;
     clearTimeout(scrollTimeout);
     
-    // بعد از توقف اسکرول
     scrollTimeout = setTimeout(() => {
         isScrolling = false;
     }, 150);
     
 }, { passive: false });
 
-// تنظیم موقعیت اولیه برای نمایش ۳ کارت
+// تنظیم موقعیت اولیه برای نمایش ۳ کارت با فاصله مناسب از دیواره
 window.addEventListener("load", () => {
     setTimeout(() => {
-        // تنظیم موقعیت اولیه به گونه‌ای که ۳ کارت قابل مشاهده باشن
-        targetPosition = -20; // مقدار کمتر برای نمایش ۳ کارت با سایز جدید
+        targetPosition = -20; // مقدار کمی به چپ
         position = targetPosition;
         cardsContainer.style.transition = "none";
         cardsContainer.style.transform = `translateX(${position}px)`;
@@ -155,11 +152,9 @@ window.addEventListener("mousemove", (e) => {
     const diff = e.pageX - startX;
     const max = getMaxScroll();
     
-    // حرکت با ماوس
-    targetPosition = startPosition + diff * 0.4; // کاهش ضریب برای نرمی بیشتر
+    targetPosition = startPosition + diff * 0.4;
     position = targetPosition;
     
-    // محدود کردن
     if (targetPosition > 0) targetPosition = 0;
     if (targetPosition < -max) targetPosition = -max;
     
@@ -172,7 +167,6 @@ window.addEventListener("mouseup", () => {
         cardsContainer.style.cursor = "grab";
         cardsContainer.style.transition = "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
         
-        // ادامه انیمیشن به سمت targetPosition
         position = targetPosition;
         if (!animationFrame) {
             animateScroll();
