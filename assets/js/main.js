@@ -17,3 +17,6 @@ window.addEventListener("wheel", (e) => {
         position = 0;
     }
 });
+let position = 0;
+
+
