@@ -40,7 +40,7 @@ body {
     background: rgba(255,255,255,0.4);
 }
 
-/* ===== منوی همبرگری - سمت چپ ===== */
+/* ===== منوی همبرگری - سمت چپ (کلیکی) ===== */
 .menu-wrapper {
     position: relative;
     display: inline-block;
@@ -70,7 +70,7 @@ body {
     background: rgba(255,255,255,0.4);
 }
 
-/* رفع مشکل بسته شدن سریع منو */
+/* منوی کلیکی - حالت بسته */
 .dropdown {
     position: absolute;
     top: 70px;
@@ -87,10 +87,11 @@ body {
     border: 1px solid rgba(255,255,255,0.3);
     transition: visibility 0.2s, opacity 0.2s ease;
     pointer-events: none;
+    z-index: 1001;
 }
 
-.menu-wrapper:hover .dropdown,
-.dropdown:hover {
+/* حالت باز منو */
+.dropdown.active {
     visibility: visible;
     opacity: 1;
     pointer-events: all;
@@ -167,29 +168,29 @@ body {
 
 .cards-container {
     display: flex;
-    gap: 24px;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    gap: 20px; /* کاهش فاصله */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: transform;
 }
 
 .card-item {
-    min-width: 280px;
-    height: 160px;
+    min-width: 250px; /* برگشت به سایز قبلی */
+    height: 150px; /* برگشت به سایز قبلی */
     background: rgba(255,255,255,0.3);
     backdrop-filter: blur(10px);
     border-radius: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem; /* برگشت به سایز قبلی */
     font-weight: 600;
     color: #0a1c2f;
     border: 1px solid rgba(255,255,255,0.4);
     transition: all 0.3s ease;
     flex: 0 0 auto;
-    padding: 20px 35px;
+    padding: 20px 30px; /* برگشت به سایز قبلی */
     white-space: nowrap;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     user-select: none;
 }
 
@@ -229,7 +230,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* وسط‌چین کردن */
+    align-items: center;
     color: white;
     text-shadow: 0 2px 12px rgba(0,0,0,0.5);
     padding: 20px;
