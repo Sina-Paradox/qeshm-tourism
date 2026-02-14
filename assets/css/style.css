@@ -27,10 +27,11 @@ body {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.3);
-    padding: 10px 24px;
+    padding: 12px 28px;
     border-radius: 40px;
     cursor: pointer;
     font-weight: 500;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
     color: #0a1c2f;
 }
@@ -49,7 +50,7 @@ body {
 .hamburger {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(12px);
-    padding: 12px 14px;
+    padding: 14px 16px;
     border-radius: 30px;
     cursor: pointer;
     border: 1px solid rgba(255,255,255,0.3);
@@ -58,10 +59,10 @@ body {
 
 .hamburger span {
     display: block;
-    width: 26px;
+    width: 28px;
     height: 3px;
     background: #0a1c2f;
-    margin: 5px 0;
+    margin: 6px 0;
     border-radius: 6px;
     transition: 0.3s;
 }
@@ -73,17 +74,17 @@ body {
 /* منوی کلیکی - حالت بسته */
 .dropdown {
     position: absolute;
-    top: 70px;
+    top: 80px;
     left: 0;
     background: rgba(255,255,255,0.2);
     backdrop-filter: blur(16px);
-    padding: 12px;
-    border-radius: 24px;
+    padding: 16px;
+    border-radius: 30px;
     visibility: hidden;
     opacity: 0;
     flex-direction: column;
-    gap: 8px;
-    min-width: 220px;
+    gap: 12px; /* افزایش فاصله بین آیتم‌ها */
+    min-width: 250px;
     border: 1px solid rgba(255,255,255,0.3);
     transition: visibility 0.2s, opacity 0.2s ease;
     pointer-events: none;
@@ -99,20 +100,23 @@ body {
 
 .drop-item {
     background: rgba(255,255,255,0.3);
-    padding: 12px 16px;
-    border-radius: 40px;
+    padding: 14px 20px;
+    border-radius: 50px;
     text-decoration: none;
     color: #0a1c2f;
     font-weight: 500;
+    font-size: 1.1rem;
     transition: all 0.2s ease;
     text-align: center;
     display: block;
     cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .drop-item:hover {
-    background: rgba(255,255,255,0.6);
-    transform: translateX(-6px);
+    background: rgba(255,255,255,0.7);
+    transform: translateX(-8px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 /* ===== Hero ===== */
@@ -141,63 +145,66 @@ body {
 
 /* لوگو عکس */
 .logo-img {
-    max-width: 300px;
+    max-width: 350px;
     height: auto;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .auth-logo {
     filter: brightness(0) invert(1);
-    max-width: 250px;
-    margin: 0 auto 10px;
+    max-width: 300px;
+    margin: 0 auto 15px;
 }
 
 .slogan {
-    font-size: 1.4rem;
-    opacity: 0.9;
+    font-size: 1.6rem;
+    opacity: 0.95;
+    letter-spacing: 1px;
 }
 
 /* ===== کارت‌های اسکرول افقی ===== */
 .scrolling-cards {
     overflow: hidden;
     width: 100%;
-    padding: 60px 0;
-    margin-top: 40px;
+    padding: 70px 0;
+    margin-top: 50px;
     position: relative;
 }
 
 .cards-container {
     display: flex;
-    gap: 20px; /* کاهش فاصله */
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    gap: 30px; /* افزایش فاصله بین کارت‌ها */
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: transform;
 }
 
 .card-item {
-    min-width: 250px; /* برگشت به سایز قبلی */
-    height: 150px; /* برگشت به سایز قبلی */
+    min-width: 320px; /* افزایش سایز */
+    height: 180px; /* افزایش سایز */
     background: rgba(255,255,255,0.3);
-    backdrop-filter: blur(10px);
-    border-radius: 40px;
+    backdrop-filter: blur(12px);
+    border-radius: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem; /* برگشت به سایز قبلی */
+    font-size: 1.5rem; /* افزایش سایز متن */
     font-weight: 600;
     color: #0a1c2f;
     border: 1px solid rgba(255,255,255,0.4);
     transition: all 0.3s ease;
     flex: 0 0 auto;
-    padding: 20px 30px; /* برگشت به سایز قبلی */
+    padding: 25px 40px;
     white-space: nowrap;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     user-select: none;
+    letter-spacing: 0.5px;
 }
 
 .card-item:hover {
-    transform: scale(1.05) translateY(-5px);
-    background: rgba(255,255,255,0.6);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transform: scale(1.05) translateY(-8px);
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+    border-color: rgba(255,255,255,0.8);
 }
 
 /* ===== صفحه احراز هویت ===== */
@@ -242,47 +249,47 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 24px;
+    gap: 30px;
     padding: 20px;
 }
 
 .glass {
     background: rgba(255,255,255,0.2);
     backdrop-filter: blur(16px);
-    padding: 28px 24px;
-    border-radius: 40px;
-    width: 340px;
+    padding: 35px 30px;
+    border-radius: 50px;
+    width: 380px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
     border: 1px solid rgba(255,255,255,0.3);
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .glass-input {
-    padding: 14px 18px;
+    padding: 16px 20px;
     border-radius: 50px;
     border: none;
     background: rgba(255,255,255,0.5);
     backdrop-filter: blur(4px);
-    font-size: 1rem;
+    font-size: 1.1rem;
     transition: all 0.2s;
 }
 
 .glass-input:focus {
     outline: none;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 0 3px rgba(0,160,255,0.3);
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 4px rgba(0,160,255,0.3);
 }
 
 .glass-btn {
-    padding: 14px;
+    padding: 16px;
     border-radius: 50px;
     border: none;
     background: #00aaff;
     color: white;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 1px solid rgba(255,255,255,0.3);
@@ -290,7 +297,8 @@ body {
 
 .glass-btn:hover {
     background: #0088cc;
-    transform: scale(1.02);
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0,136,204,0.4);
 }
 
 /* ===== ریسپانسیو ===== */
@@ -300,21 +308,21 @@ body {
     }
     
     .auth-left {
-        padding: 60px 20px 20px;
+        padding: 80px 20px 30px;
     }
     
     .auth-right {
-        padding-bottom: 60px;
+        padding-bottom: 70px;
     }
     
     .logo-img {
-        max-width: 200px;
+        max-width: 250px;
     }
     
     .card-item {
-        min-width: 220px;
-        height: 130px;
-        font-size: 1.1rem;
+        min-width: 260px;
+        height: 150px;
+        font-size: 1.2rem;
     }
 }
 
@@ -323,15 +331,43 @@ body {
         padding: 15px 20px;
     }
     
+    .auth-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+    
+    .hamburger {
+        padding: 12px 14px;
+    }
+    
+    .hamburger span {
+        width: 24px;
+        margin: 5px 0;
+    }
+    
     .glass {
-        width: 280px;
-        padding: 20px;
+        width: 300px;
+        padding: 25px 20px;
+    }
+    
+    .glass-input, .glass-btn {
+        padding: 14px;
+        font-size: 1rem;
     }
     
     .card-item {
-        min-width: 180px;
-        height: 110px;
+        min-width: 220px;
+        height: 130px;
+        font-size: 1.1rem;
+        padding: 15px 25px;
+    }
+    
+    .dropdown {
+        min-width: 200px;
+    }
+    
+    .drop-item {
+        padding: 12px 16px;
         font-size: 1rem;
-        padding: 15px 20px;
     }
 }
