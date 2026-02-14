@@ -22,7 +22,7 @@ body {
     z-index: 1000;
 }
 
-/* دکمه ورود - سمت راست */
+/* دکمه ورود - سمت چپ (چون سایت چپ‌چینه) */
 .auth-btn {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(12px);
@@ -41,7 +41,7 @@ body {
     background: rgba(255,255,255,0.4);
 }
 
-/* ===== منوی همبرگری - سمت چپ (کلیکی) ===== */
+/* ===== منوی همبرگری - سمت راست (چون سایت چپ‌چینه) ===== */
 .menu-wrapper {
     position: relative;
     display: inline-block;
@@ -75,7 +75,7 @@ body {
 .dropdown {
     position: absolute;
     top: 60px;
-    left: 0;
+    right: 0; /* تغییر از left به right برای چپ‌چین */
     background: rgba(255,255,255,0.2);
     backdrop-filter: blur(16px);
     padding: 12px;
@@ -110,16 +110,16 @@ body {
     display: block;
     cursor: pointer;
     border: 1px solid rgba(255,255,255,0.2);
-    margin-bottom: 8px; /* فاصله بین آیتم‌ها */
+    margin-bottom: 8px;
 }
 
 .drop-item:last-child {
-    margin-bottom: 0; /* آخرین آیتم فاصله نداشته باشه */
+    margin-bottom: 0;
 }
 
 .drop-item:hover {
     background: rgba(255,255,255,0.7);
-    transform: translateX(-4px);
+    transform: translateX(4px); /* تغییر از -4px به 4px برای چپ‌چین */
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 
