@@ -1,33 +1,57 @@
-const loop = document.getElementById("loop");
+const cardsContainer = document.getElementById("cardsContainer");
 let position = 0;
 let isScrolling = false;
 let scrollTimeout;
+let targetPosition = 0;
+let animationFrame = null;
 
 // تابع برای محاسبه حداکثر اسکرول مجاز
 function getMaxScroll() {
-    const containerWidth = loop.parentElement.clientWidth;
-    const contentWidth = loop.scrollWidth;
-    return (contentWidth - containerWidth) / 2;
+    const containerWidth = cardsContainer.parentElement.clientWidth;
+    const contentWidth = cardsContainer.scrollWidth;
+    return Math.max(0, (contentWidth - containerWidth) / 2);
+}
+
+// تابع انیمیشن نرم با requestAnimationFrame
+function animateScroll() {
+    // حرکت نرم به سمت targetPosition
+    const diff = targetPosition - position;
+    if (Math.abs(diff) > 0.5) {
+        position += diff * 0.15; // ضریب نرمی حرکت
+        cardsContainer.style.transform = `translateX(${position}px)`;
+        animationFrame = requestAnimationFrame(animateScroll);
+    } else {
+        position = targetPosition;
+        cardsContainer.style.transform = `translateX(${position}px)`;
+        animationFrame = null;
+    }
 }
 
 // تابع برای حرکت نرم
 function smoothMove(direction) {
-    const step = 60; // مقدار حرکت
+    const step = 120; // مقدار حرکت
     const max = getMaxScroll();
     
     if (direction > 0) { // اسکرول به پایین (حرکت به چپ)
-        position -= step;
+        targetPosition -= step;
     } else { // اسکرول به بالا (حرکت به راست)
-        position += step;
+        targetPosition += step;
     }
     
-    // محدود کردن موقعیت برای ایجاد لوپ
-    if (position > max) position = -max;
-    if (position < -max) position = max;
+    // محدود کردن موقعیت برای ایجاد لوپ بی‌نهایت
+    if (targetPosition > max) {
+        targetPosition = -max;
+        position = -max;
+    }
+    if (targetPosition < -max) {
+        targetPosition = max;
+        position = max;
+    }
     
-    // اعمال تغییر با transition
-    loop.style.transition = "transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)";
-    loop.style.transform = `translateX(${position}px)`;
+    // شروع انیمیشن اگر در حال اجرا نیست
+    if (!animationFrame) {
+        animateScroll();
+    }
 }
 
 // رویداد اسکرول ماوس
@@ -45,24 +69,54 @@ window.addEventListener("wheel", (e) => {
     isScrolling = true;
     clearTimeout(scrollTimeout);
     
-    // بعد از توقف اسکرول، transition رو نرمتر میکنیم
+    // بعد از توقف اسکرول
     scrollTimeout = setTimeout(() => {
         isScrolling = false;
-    }, 100);
+    }, 150);
     
 }, { passive: false });
 
-// حرکت با کشیدن ماوس (اختیاری - برای تجربه بهتر)
+// تنظیم موقعیت اولیه برای نمایش ۳ کارت
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        const max = getMaxScroll();
+        // تنظیم موقعیت اولیه به گونه‌ای که ۳ کارت قابل مشاهده باشن
+        targetPosition = -50; // مقدار کمی به چپ برای نمایش ۳ کارت
+        position = targetPosition;
+        cardsContainer.style.transition = "none";
+        cardsContainer.style.transform = `translateX(${position}px)`;
+    }, 100);
+});
+
+// تنظیم مجدد در صورت تغییر سایز صفحه
+window.addEventListener("resize", () => {
+    const max = getMaxScroll();
+    if (Math.abs(position) > max) {
+        targetPosition = position > 0 ? max : -max;
+        if (!animationFrame) animateScroll();
+    }
+});
+
+// جلوگیری از درگ کردن تصادفی
+cardsContainer.addEventListener("dragstart", (e) => {
+    e.preventDefault();
+});
+
+// اضافه کردن قابلیت کشیدن با موس (اختیاری)
 let isDragging = false;
 let startX;
 let startPosition;
 
-loop.addEventListener("mousedown", (e) => {
+cardsContainer.addEventListener("mousedown", (e) => {
     isDragging = true;
     startX = e.pageX;
-    startPosition = position;
-    loop.style.cursor = "grabbing";
-    loop.style.transition = "none"; // موقع کشیدن transition نداشته باشه
+    startPosition = targetPosition;
+    cardsContainer.style.cursor = "grabbing";
+    cardsContainer.style.transition = "none";
+    if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+    }
 });
 
 window.addEventListener("mousemove", (e) => {
@@ -73,40 +127,29 @@ window.addEventListener("mousemove", (e) => {
     const max = getMaxScroll();
     
     // حرکت با ماوس
-    position = startPosition + diff * 0.5; // ضریب برای نرمی بیشتر
+    targetPosition = startPosition + diff * 0.8;
+    position = targetPosition;
     
     // محدود کردن
-    if (position > max) position = -max;
-    if (position < -max) position = max;
+    if (targetPosition > max) targetPosition = max;
+    if (targetPosition < -max) targetPosition = -max;
     
-    loop.style.transform = `translateX(${position}px)`;
+    cardsContainer.style.transform = `translateX(${targetPosition}px)`;
 });
 
 window.addEventListener("mouseup", () => {
     if (isDragging) {
         isDragging = false;
-        loop.style.cursor = "grab";
-        loop.style.transition = "transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1)";
+        cardsContainer.style.cursor = "grab";
+        cardsContainer.style.transition = "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+        
+        // ادامه انیمیشن به سمت targetPosition
+        position = targetPosition;
+        if (!animationFrame) {
+            animateScroll();
+        }
     }
-});
-
-// جلوگیری از درگ کردن تصادفی
-loop.addEventListener("dragstart", (e) => {
-    e.preventDefault();
 });
 
 // تنظیم اولیه
-loop.style.cursor = "grab";
-
-// بررسی برای لوپ بی‌نهایت (ریست نرم)
-setInterval(() => {
-    if (!isScrolling && !isDragging) {
-        const max = getMaxScroll();
-        // اگه خیلی نزدیک به لبه شد، به آرومی ریست کن
-        if (Math.abs(position) > max - 100) {
-            position = 0;
-            loop.style.transition = "transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)";
-            loop.style.transform = `translateX(0px)`;
-        }
-    }
-}, 500);
+cardsContainer.style.cursor = "grab";

@@ -43,6 +43,7 @@ body {
 /* ===== منوی همبرگری - سمت چپ ===== */
 .menu-wrapper {
     position: relative;
+    display: inline-block;
 }
 
 .hamburger {
@@ -69,24 +70,30 @@ body {
     background: rgba(255,255,255,0.4);
 }
 
+/* رفع مشکل بسته شدن سریع منو */
 .dropdown {
     position: absolute;
     top: 70px;
-    left: 0; /* راست به چپ شد */
+    left: 0;
     background: rgba(255,255,255,0.2);
     backdrop-filter: blur(16px);
     padding: 12px;
     border-radius: 24px;
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     flex-direction: column;
     gap: 8px;
     min-width: 220px;
     border: 1px solid rgba(255,255,255,0.3);
-    transition: all 0.3s ease;
+    transition: visibility 0.2s, opacity 0.2s ease;
+    pointer-events: none;
 }
 
-.menu-wrapper:hover .dropdown {
-    display: flex;
+.menu-wrapper:hover .dropdown,
+.dropdown:hover {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: all;
 }
 
 .drop-item {
@@ -98,11 +105,13 @@ body {
     font-weight: 500;
     transition: all 0.2s ease;
     text-align: center;
+    display: block;
+    cursor: pointer;
 }
 
 .drop-item:hover {
     background: rgba(255,255,255,0.6);
-    transform: translateX(-6px); /* حالا به چپ حرکت میکنه */
+    transform: translateX(-6px);
 }
 
 /* ===== Hero ===== */
@@ -137,8 +146,9 @@ body {
 }
 
 .auth-logo {
-    filter: brightness(0) invert(1); /* برای پس زمینه تیره سفید میشه */
+    filter: brightness(0) invert(1);
     max-width: 250px;
+    margin: 0 auto 10px;
 }
 
 .slogan {
@@ -146,57 +156,72 @@ body {
     opacity: 0.9;
 }
 
-/* ===== لوپ اسکرول افقی ===== */
-.loop-section {
+/* ===== کارت‌های اسکرول افقی ===== */
+.scrolling-cards {
     overflow: hidden;
     width: 100%;
     padding: 60px 0;
     margin-top: 40px;
+    position: relative;
 }
 
-.loop-container {
+.cards-container {
     display: flex;
     gap: 24px;
-    transition: transform 0.3s ease-out; /* تغییر به ease-out برای نرمی بیشتر */
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: transform;
-    cursor: grab;
 }
 
-.loop-box {
-    min-width: 240px;
-    height: 140px;
+.card-item {
+    min-width: 280px;
+    height: 160px;
     background: rgba(255,255,255,0.3);
     backdrop-filter: blur(10px);
     border-radius: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: #0a1c2f;
     border: 1px solid rgba(255,255,255,0.4);
-    transition: transform 0.2s ease, background 0.2s ease;
+    transition: all 0.3s ease;
     flex: 0 0 auto;
-    padding: 20px 30px;
+    padding: 20px 35px;
     white-space: nowrap;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    user-select: none; /* جلوگیری از انتخاب متن موقع اسکرول */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    user-select: none;
 }
 
-.loop-box:hover {
-    transform: scale(1.05);
-    background: rgba(255,255,255,0.5);
+.card-item:hover {
+    transform: scale(1.05) translateY(-5px);
+    background: rgba(255,255,255,0.6);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
 /* ===== صفحه احراز هویت ===== */
 .auth-page {
-    background: linear-gradient(145deg, #a7d0f0, #f5e6c6);
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.auth-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.7);
 }
 
 .auth-container {
     display: flex;
     min-height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../images/hero2.jpg') center/cover no-repeat fixed;
+    position: relative;
+    z-index: 1;
 }
 
 .auth-left {
@@ -204,14 +229,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    padding-left: 60px;
+    align-items: center; /* وسط‌چین کردن */
     color: white;
     text-shadow: 0 2px 12px rgba(0,0,0,0.5);
-}
-
-.auth-hero {
-    display: none; /* عکس پس زمینه توی کانتینر هست */
+    padding: 20px;
 }
 
 .auth-right {
@@ -221,6 +242,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 24px;
+    padding: 20px;
 }
 
 .glass {
@@ -233,7 +255,7 @@ body {
     flex-direction: column;
     gap: 18px;
     border: 1px solid rgba(255,255,255,0.3);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .glass-input {
@@ -275,15 +297,40 @@ body {
     .auth-container {
         flex-direction: column;
     }
+    
     .auth-left {
-        align-items: center;
-        padding: 40px 20px;
-        text-align: center;
+        padding: 60px 20px 20px;
     }
+    
     .auth-right {
         padding-bottom: 60px;
     }
+    
     .logo-img {
         max-width: 200px;
+    }
+    
+    .card-item {
+        min-width: 220px;
+        height: 130px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 15px 20px;
+    }
+    
+    .glass {
+        width: 280px;
+        padding: 20px;
+    }
+    
+    .card-item {
+        min-width: 180px;
+        height: 110px;
+        font-size: 1rem;
+        padding: 15px 20px;
     }
 }
