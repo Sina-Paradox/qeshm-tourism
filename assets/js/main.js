@@ -62,8 +62,10 @@ function smoothMove(direction) {
     
     if (direction > 0) { // اسکرول به پایین (حرکت به راست)
         targetPosition += step;
+        console.log("اسکرول به پایین - حرکت به راست");
     } else { // اسکرول به بالا (حرکت به چپ)
         targetPosition -= step;
+        console.log("اسکرول به بالا - حرکت به چپ");
     }
     
     // محدود کردن به محدوده مجاز
