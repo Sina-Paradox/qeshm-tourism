@@ -1,22 +1,32 @@
 const loop = document.getElementById("loop");
 let position = 0;
 
+// مقدار حداکثر اسکرول (نصف عرض کل)
+const maxScroll = () => (loop.scrollWidth - loop.parentElement.clientWidth) / 2;
+
 window.addEventListener("wheel", (e) => {
-    const step = 100; // کمتر از قبل برای حرکت نرم‌تر
-    if(e.deltaY > 0){
+    e.preventDefault(); // جلوگیری از اسکرول عمودی صفحه
+
+    const step = 80; // سرعت حرکت
+    if (e.deltaY > 0) {
         position -= step;
     } else {
         position += step;
     }
 
-    loop.style.transition = "transform 0.6s ease"; // کندتر
+    // محدود کردن موقعیت برای ایجاد لوپ بی‌نهایت
+    const max = maxScroll();
+    if (position > max) position = -max;
+    if (position < -max) position = max;
+
     loop.style.transform = `translateX(${position}px)`;
+}, { passive: false });
 
-    const max = loop.scrollWidth / 2;
-    if(Math.abs(position) > max){
+// لوپ بی‌نهایت با ریست نرم
+setInterval(() => {
+    const max = maxScroll();
+    if (Math.abs(position) >= max - 50) {
         position = 0;
+        loop.style.transform = `translateX(0px)`;
     }
-});
-let position = 0;
-
-
+}, 200);

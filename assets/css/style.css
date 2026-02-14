@@ -1,203 +1,280 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:tahoma;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Vazirmatn', sans-serif;
 }
 
 body {
-    background: linear-gradient(to bottom, #a7c7e7, #f7f1e1); /* آبی روشن → رنگ شنی */
-    color: #1a1a1a; /* متن تیره برای خوانایی */
+    background: linear-gradient(145deg, #b3d9ff 0%, #fce6b4 100%);
+    color: #1e2b3a;
+    min-height: 100vh;
 }
 
-.loop-box, .drop-item, .auth-btn {
-    background: rgba(255, 255, 255, 0.5); /* شیشه‌ای سبک */
-    backdrop-filter: blur(8px);
+/* ===== Header ===== */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    z-index: 1000;
 }
 
-
-.header{
-    position:fixed;
-    top:0;
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    padding:20px 40px;
-    z-index:100;
+.auth-btn {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 10px 24px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: #0a1c2f;
 }
 
-.auth-btn{
-    background:rgba(255,255,255,0.4);
-    backdrop-filter:blur(10px);
-    border:none;
-    padding:10px 20px;
-    border-radius:15px;
-    cursor:pointer;
-    transition:0.3s;
-    z-index: 100;
+.auth-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255,255,255,0.4);
 }
 
-.auth-btn:hover{
-    transform:scale(1.1);
+/* ===== منوی همبرگری ===== */
+.menu-wrapper {
+    position: relative;
 }
 
-.menu-wrapper{
-    position:relative;
+.hamburger {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    padding: 12px 14px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.2s ease;
 }
 
-.hamburger{
-    background:rgba(255,255,255,0.4);
-    backdrop-filter:blur(10px);
-    padding:10px;
-    border-radius:15px;
-    cursor:pointer;
+.hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #0a1c2f;
+    margin: 5px 0;
+    border-radius: 6px;
+    transition: 0.3s;
 }
 
-.hamburger span{
-    display:block;
-    width:25px;
-    height:3px;
-    background:white;
-    margin:5px 0;
+.hamburger:hover {
+    background: rgba(255,255,255,0.4);
 }
 
 .dropdown {
     position: absolute;
-    top: 60px;
+    top: 70px;
     right: 0;
     background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    padding: 10px;
-    border-radius: 15px;
+    backdrop-filter: blur(16px);
+    padding: 12px;
+    border-radius: 24px;
     display: none;
-    transition: all 0.6s ease; 
+    flex-direction: column;
+    gap: 8px;
+    min-width: 200px;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
 }
 
-.drop-item{
-    background:rgba(255,255,255,0.4);
-    padding:10px;
-    margin:5px 0;
-    border-radius:15px;
-    cursor:pointer;
-    transition:0.3s;
+.menu-wrapper:hover .dropdown {
+    display: flex;
 }
 
-.drop-item:hover{
-    transform:translateX(-5px);
+.drop-item {
+    background: rgba(255,255,255,0.3);
+    padding: 12px 16px;
+    border-radius: 40px;
+    text-decoration: none;
+    color: #0a1c2f;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-align: center;
 }
 
-.menu-wrapper:hover .dropdown{
-    display:block;
+.drop-item:hover {
+    background: rgba(255,255,255,0.6);
+    transform: translateX(-6px);
 }
 
-.hero{
-    height:50vh;
-    position:relative;
+/* ===== Hero ===== */
+.hero {
+    height: 60vh;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero-img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
 }
 
-.hero-content{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    text-align:center;
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
+.logo {
+    font-size: 4rem;
+    letter-spacing: 8px;
+    font-weight: 700;
+}
+
+.slogan {
+    font-size: 1.4rem;
+    opacity: 0.9;
+}
+
+/* ===== لوپ اسکرول افقی ===== */
 .loop-section {
     overflow: hidden;
     width: 100%;
-    position: relative;
-    padding: 50px 0;
-    margin-top: 120px;
+    padding: 60px 0;
 }
 
 .loop-container {
     display: flex;
-    gap: 30px; /* فاصله باکس‌ها */
-    transition: transform 0.6s ease; /* نرم کردن حرکت */
+    gap: 24px;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
 }
 
-.loop-box{
-    min-width:250px;
-    height:150px;
-    background:rgba(255,255,255,0.4);
-    backdrop-filter:blur(8px);
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-    transition:0.3s;
-    flex: 0 0 auto; 
+.loop-box {
+    min-width: 240px;
+    height: 140px;
+    background: rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0a1c2f;
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: all 0.25s ease;
+    flex: 0 0 auto;
     padding: 20px 30px;
-    white-space: nowrap; 
+    white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
-.loop-box:hover{
-    transform:scale(1.1);
+.loop-box:hover {
+    transform: scale(1.08);
+    background: rgba(255,255,255,0.5);
+}
+
+/* ===== صفحه احراز هویت ===== */
+.auth-page {
+    background: linear-gradient(145deg, #a7d0f0, #f5e6c6);
 }
 
 .auth-container {
     display: flex;
     min-height: 100vh;
-    background-image: url('assets/images/beach2.jpg'); /* عکس ساحل قشم */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: url('../images/hero2.jpg') center/cover no-repeat fixed;
+    backdrop-filter: blur(4px);
 }
 
 .auth-left {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* وسط عمودی */
-    align-items: flex-start; /* سمت چپ */
-    padding-left: 50px;
-    color: #fff; /* متن روی عکس */
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 60px;
+    color: white;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.auth-hero {
+    display: none;
 }
 
 .auth-right {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* وسط عمودی */
-    align-items: center; /* وسط افقی */
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
 }
 
-.login-box, .register-box {
-    background: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    border-radius: 15px;
-    width: 300px; /* اندازه ثابت */
+.glass {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(16px);
+    padding: 28px 24px;
+    border-radius: 40px;
+    width: 340px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
-.login-box input {
-    padding: 10px;
-    border-radius: 10px;
+.glass-input {
+    padding: 14px 18px;
+    border-radius: 50px;
     border: none;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(4px);
+    font-size: 1rem;
+    transition: all 0.2s;
 }
 
-.login-box button, .register-box button {
-    padding: 10px;
-    border-radius: 10px;
+.glass-input:focus {
+    outline: none;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 0 3px rgba(0,160,255,0.3);
+}
+
+.glass-btn {
+    padding: 14px;
+    border-radius: 50px;
     border: none;
-    cursor: pointer;
-    background-color: #00aaff;
-    color: #fff;
+    background: #00aaff;
+    color: white;
     font-weight: bold;
-    transition: 0.3s ease;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.3);
 }
 
-.login-box button:hover, .register-box button:hover {
-    background-color: #0088cc;
+.glass-btn:hover {
+    background: #0088cc;
+    transform: scale(1.02);
+}
+
+/* ===== ریسپانسیو ===== */
+@media (max-width: 800px) {
+    .auth-container {
+        flex-direction: column;
+    }
+    .auth-left {
+        align-items: center;
+        padding: 40px 20px;
+        text-align: center;
+    }
+    .auth-right {
+        padding-bottom: 60px;
+    }
+    .logo {
+        font-size: 3rem;
+    }
 }

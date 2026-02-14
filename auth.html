@@ -1,41 +1,52 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>ورود</title>
+    <title>ورود | عضویت - قشم</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="auth-page">
 
 <header class="header">
     <div></div>
-    <div class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="menu-wrapper">
+        <div class="hamburger" aria-label="منو">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="dropdown">
+            <a href="#" class="drop-item">اقامت</a>
+            <a href="#" class="drop-item">کافه و رستوران</a>
+            <a href="#" class="drop-item">تفریحات</a>
+            <a href="#" class="drop-item">جاذبه‌ها</a>
+            <a href="#" class="drop-item">فروشگاه‌ها</a>
+            <a href="#" class="drop-item">درباره ما</a>
+            <a href="#" class="drop-item">پشتیبانی</a>
+        </nav>
     </div>
 </header>
 
-<section class="auth-page">
+<div class="auth-container">
+    <img src="assets/images/hero2.jpg" alt="ساحل قشم" class="auth-hero" loading="lazy">
 
     <div class="auth-left">
-        <img src="assets/images/hero2.jpg" alt="ساحل قشم" class="auth-hero">
-        <h1>QESHM</h1>
-        <p>جزیره شگفتی‌های ایران</p>
+        <h1 class="logo">QESHM</h1>
+        <p class="slogan">جزیره شگفتی‌های ایران</p>
     </div>
 
     <div class="auth-right">
-        <div class="login-box">
-            <input type="text" placeholder="نام کاربری">
-            <input type="password" placeholder="رمز عبور">
-            <button onclick="window.location.href='auth.html'">ورود</button>
+        <div class="login-box glass">
+            <input type="text" placeholder="نام کاربری" class="glass-input">
+            <input type="password" placeholder="رمز عبور" class="glass-input">
+            <button class="glass-btn" onclick="window.location.href='index.html'">ورود</button>
         </div>
-        <div class="register-box">
-            <button onclick="window.location.href='auth.html'">عضویت</button>
+        <div class="register-box glass">
+            <button class="glass-btn" onclick="window.location.href='auth.html'">عضویت</button>
         </div>
     </div>
+</div>
 
-</section>
-
+<script src="assets/js/main.js"></script>
 </body>
 </html>
