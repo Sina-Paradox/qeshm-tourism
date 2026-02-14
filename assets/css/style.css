@@ -22,6 +22,7 @@ body {
     z-index: 1000;
 }
 
+/* دکمه ورود - سمت راست */
 .auth-btn {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(12px);
@@ -39,7 +40,7 @@ body {
     background: rgba(255,255,255,0.4);
 }
 
-/* ===== منوی همبرگری ===== */
+/* ===== منوی همبرگری - سمت چپ ===== */
 .menu-wrapper {
     position: relative;
 }
@@ -71,7 +72,7 @@ body {
 .dropdown {
     position: absolute;
     top: 70px;
-    right: 0;
+    left: 0; /* راست به چپ شد */
     background: rgba(255,255,255,0.2);
     backdrop-filter: blur(16px);
     padding: 12px;
@@ -79,7 +80,7 @@ body {
     display: none;
     flex-direction: column;
     gap: 8px;
-    min-width: 200px;
+    min-width: 220px;
     border: 1px solid rgba(255,255,255,0.3);
     transition: all 0.3s ease;
 }
@@ -101,7 +102,7 @@ body {
 
 .drop-item:hover {
     background: rgba(255,255,255,0.6);
-    transform: translateX(-6px);
+    transform: translateX(-6px); /* حالا به چپ حرکت میکنه */
 }
 
 /* ===== Hero ===== */
@@ -128,10 +129,16 @@ body {
     text-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
-.logo {
-    font-size: 4rem;
-    letter-spacing: 8px;
-    font-weight: 700;
+/* لوگو عکس */
+.logo-img {
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.auth-logo {
+    filter: brightness(0) invert(1); /* برای پس زمینه تیره سفید میشه */
+    max-width: 250px;
 }
 
 .slogan {
@@ -144,13 +151,15 @@ body {
     overflow: hidden;
     width: 100%;
     padding: 60px 0;
+    margin-top: 40px;
 }
 
 .loop-container {
     display: flex;
     gap: 24px;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.3s ease-out; /* تغییر به ease-out برای نرمی بیشتر */
     will-change: transform;
+    cursor: grab;
 }
 
 .loop-box {
@@ -166,15 +175,16 @@ body {
     font-weight: 600;
     color: #0a1c2f;
     border: 1px solid rgba(255,255,255,0.4);
-    transition: all 0.25s ease;
+    transition: transform 0.2s ease, background 0.2s ease;
     flex: 0 0 auto;
     padding: 20px 30px;
     white-space: nowrap;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    user-select: none; /* جلوگیری از انتخاب متن موقع اسکرول */
 }
 
 .loop-box:hover {
-    transform: scale(1.08);
+    transform: scale(1.05);
     background: rgba(255,255,255,0.5);
 }
 
@@ -186,8 +196,7 @@ body {
 .auth-container {
     display: flex;
     min-height: 100vh;
-    background: url('../images/hero2.jpg') center/cover no-repeat fixed;
-    backdrop-filter: blur(4px);
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('../images/hero2.jpg') center/cover no-repeat fixed;
 }
 
 .auth-left {
@@ -202,7 +211,7 @@ body {
 }
 
 .auth-hero {
-    display: none;
+    display: none; /* عکس پس زمینه توی کانتینر هست */
 }
 
 .auth-right {
@@ -274,7 +283,7 @@ body {
     .auth-right {
         padding-bottom: 60px;
     }
-    .logo {
-        font-size: 3rem;
+    .logo-img {
+        max-width: 200px;
     }
 }
