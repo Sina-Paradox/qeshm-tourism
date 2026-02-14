@@ -37,13 +37,12 @@ if (hamburgerBtn && dropdownMenu) {
 function getMaxScroll() {
     const containerWidth = cardsContainer.parentElement.clientWidth;
     const contentWidth = cardsContainer.scrollWidth;
-    const containerPadding = 40; // جمع padding دو طرف (20px چپ + 20px راست)
+    const containerPadding = 40;
     return Math.max(0, (contentWidth - containerWidth + containerPadding));
 }
 
 // تابع انیمیشن نرم با requestAnimationFrame
 function animateScroll() {
-    // حرکت نرم به سمت targetPosition
     const diff = targetPosition - position;
     if (Math.abs(diff) > 0.5) {
         position += diff * 0.08;
@@ -56,18 +55,18 @@ function animateScroll() {
     }
 }
 
-// تابع برای حرکت نرم با محدودیت
+// تابع برای حرکت نرم با محدودیت - جهت برعکس شد
 function smoothMove(direction) {
     const step = 30;
     const max = getMaxScroll();
     
-    if (direction > 0) { // اسکرول به پایین (حرکت به چپ)
-        targetPosition -= step;
-    } else { // اسکرول به بالا (حرکت به راست)
+    if (direction > 0) { // اسکرول به پایین (حرکت به راست)
         targetPosition += step;
+    } else { // اسکرول به بالا (حرکت به چپ)
+        targetPosition -= step;
     }
     
-    // محدود کردن با فاصله یکسان از دیواره‌ها
+    // محدود کردن به محدوده مجاز
     if (targetPosition < -max) {
         targetPosition = -max;
     }
@@ -75,7 +74,6 @@ function smoothMove(direction) {
         targetPosition = 0;
     }
     
-    // شروع انیمیشن اگر در حال اجرا نیست
     if (!animationFrame) {
         animateScroll();
     }
@@ -86,9 +84,9 @@ window.addEventListener("wheel", (e) => {
     e.preventDefault();
     
     if (e.deltaY > 0) {
-        smoothMove(1);
+        smoothMove(1); // اسکرول به پایین
     } else {
-        smoothMove(-1);
+        smoothMove(-1); // اسکرول به بالا
     }
     
     isScrolling = true;
@@ -100,10 +98,10 @@ window.addEventListener("wheel", (e) => {
     
 }, { passive: false });
 
-// تنظیم موقعیت اولیه برای نمایش ۳ کارت با فاصله مناسب از دیواره
+// تنظیم موقعیت اولیه برای نمایش ۳ کارت
 window.addEventListener("load", () => {
     setTimeout(() => {
-        targetPosition = -20; // مقدار کمی به چپ
+        targetPosition = -20;
         position = targetPosition;
         cardsContainer.style.transition = "none";
         cardsContainer.style.transform = `translateX(${position}px)`;
@@ -128,7 +126,7 @@ cardsContainer.addEventListener("dragstart", (e) => {
     e.preventDefault();
 });
 
-// اضافه کردن قابلیت کشیدن با موس
+// قابلیت کشیدن با موس
 let isDragging = false;
 let startX;
 let startPosition;
@@ -174,5 +172,4 @@ window.addEventListener("mouseup", () => {
     }
 });
 
-// تنظیم اولیه
 cardsContainer.style.cursor = "grab";
