@@ -5,11 +5,16 @@
     font-family:tahoma;
 }
 
-body{
-    overflow:hidden;
-    background:#0f172a;
-    color:white;
+body {
+    background: linear-gradient(to bottom, #a7c7e7, #f7f1e1); /* آبی روشن → رنگ شنی */
+    color: #1a1a1a; /* متن تیره برای خوانایی */
 }
+
+.loop-box, .drop-item, .auth-btn {
+    background: rgba(255, 255, 255, 0.5); /* شیشه‌ای سبک */
+    backdrop-filter: blur(8px);
+}
+
 
 .header{
     position:fixed;
@@ -29,6 +34,7 @@ body{
     border-radius:15px;
     cursor:pointer;
     transition:0.3s;
+    z-index: 100;
 }
 
 .auth-btn:hover{
