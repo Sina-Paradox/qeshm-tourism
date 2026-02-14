@@ -55,17 +55,17 @@ function animateScroll() {
     }
 }
 
-// تابع برای حرکت نرم با محدودیت - جهت برعکس شد
+// تابع برای حرکت نرم با محدودیت - جهت درست شد
 function smoothMove(direction) {
     const step = 30;
     const max = getMaxScroll();
     
-    if (direction > 0) { // اسکرول به پایین (حرکت به راست)
-        targetPosition += step;
-        console.log("اسکرول به پایین - حرکت به راست");
-    } else { // اسکرول به بالا (حرکت به چپ)
+    if (direction > 0) { // اسکرول به پایین (حرکت به چپ)
         targetPosition -= step;
-        console.log("اسکرول به بالا - حرکت به چپ");
+        console.log("اسکرول به پایین - حرکت به چپ ✅");
+    } else { // اسکرول به بالا (حرکت به راست)
+        targetPosition += step;
+        console.log("اسکرول به بالا - حرکت به راست ✅");
     }
     
     // محدود کردن به محدوده مجاز
