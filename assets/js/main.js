@@ -41,11 +41,11 @@ function disableVerticalScroll(e) {
 window.addEventListener('wheel', (e) => {
     e.preventDefault();
     
-    // حرکت کارت‌ها بر اساس جهت اسکرول
+    // حرکت کارت‌ها بر اساس جهت اسکرول با سرعت کمتر
     if (e.deltaY > 0) {
-        smoothMove(1); // اسکرول به پایین (حرکت کارت‌ها به چپ)
+        smoothMove(0.5); // اسکرول به پایین (حرکت کارت‌ها به چپ) - سرعت کمتر
     } else {
-        smoothMove(-1); // اسکرول به بالا (حرکت کارت‌ها به راست)
+        smoothMove(-0.5); // اسکرول به بالا (حرکت کارت‌ها به راست) - سرعت کمتر
     }
 }, { passive: false });
 
@@ -53,7 +53,7 @@ window.addEventListener('wheel', (e) => {
 document.addEventListener('touchmove', (e) => {
     e.preventDefault();
     
-    // حرکت کارت‌ها بر اساس جهت اسکرول لمسی
+    // حرکت کارت‌ها بر اساس جهت اسکرول لمسی با سرعت کمتر
     if (e.touches.length > 0) {
         const touch = e.touches[0];
         if (!lastTouchY) {
@@ -64,9 +64,9 @@ document.addEventListener('touchmove', (e) => {
         const deltaY = touch.clientY - lastTouchY;
         
         if (deltaY > 0) {
-            smoothMove(-1); // حرکت به بالا (کارت‌ها به راست)
+            smoothMove(-0.5); // حرکت به بالا (کارت‌ها به راست) - سرعت کمتر
         } else if (deltaY < 0) {
-            smoothMove(1); // حرکت به پایین (کارت‌ها به چپ)
+            smoothMove(0.5); // حرکت به پایین (کارت‌ها به چپ) - سرعت کمتر
         }
         
         lastTouchY = touch.clientY;
@@ -89,9 +89,9 @@ window.addEventListener('keydown', (e) => {
         e.preventDefault();
         
         if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-            smoothMove(1); // حرکت به پایین (کارت‌ها به چپ)
+            smoothMove(0.5); // حرکت به پایین (کارت‌ها به چپ) - سرعت کمتر
         } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            smoothMove(-1); // حرکت به بالا (کارت‌ها به راست)
+            smoothMove(-0.5); // حرکت به بالا (کارت‌ها به راست) - سرعت کمتر
         }
     }
 });
@@ -106,11 +106,11 @@ function getMaxScroll() {
     return Math.max(0, (contentWidth - containerWidth + containerPadding));
 }
 
-// تابع انیمیشن نرم با requestAnimationFrame
+// تابع انیمیشن نرم با requestAnimationFrame - نرم‌تر و روان‌تر
 function animateScroll() {
     const diff = targetPosition - position;
-    if (Math.abs(diff) > 0.5) {
-        position += diff * 0.08;
+    if (Math.abs(diff) > 0.2) { // آستانه کمتر برای حرکت نرم‌تر
+        position += diff * 0.05; // ضریب کمتر برای حرکت نرم‌تر
         cardsContainer.style.transform = `translateX(${position}px)`;
         animationFrame = requestAnimationFrame(animateScroll);
     } else {
@@ -120,9 +120,9 @@ function animateScroll() {
     }
 }
 
-// تابع برای حرکت نرم با محدودیت
+// تابع برای حرکت نرم با محدودیت - با سرعت قابل تنظیم
 function smoothMove(direction) {
-    const step = 30;
+    const step = 15; // کاهش step از 30 به 15 برای حرکت آرام‌تر
     const max = getMaxScroll();
     
     if (direction > 0) { // اسکرول به پایین (حرکت به چپ)
@@ -198,7 +198,7 @@ window.addEventListener("mousemove", (e) => {
     const diff = e.pageX - startX;
     const max = getMaxScroll();
     
-    targetPosition = startPosition + diff * 0.4;
+    targetPosition = startPosition + diff * 0.3; // کاهش از 0.4 به 0.3 برای حرکت آرام‌تر
     position = targetPosition;
     
     if (targetPosition > 0) targetPosition = 0;
@@ -211,7 +211,7 @@ window.addEventListener("mouseup", () => {
     if (isDragging) {
         isDragging = false;
         cardsContainer.style.cursor = "grab";
-        cardsContainer.style.transition = "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+        cardsContainer.style.transition = "transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)"; // افزایش زمان transition
         
         position = targetPosition;
         if (!animationFrame) {
