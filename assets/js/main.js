@@ -31,6 +31,71 @@ if (hamburgerBtn && dropdownMenu) {
     });
 }
 
+// ===== غیرفعال کردن اسکرول عمودی کل صفحه =====
+function disableVerticalScroll(e) {
+    e.preventDefault();
+    return false;
+}
+
+// غیرفعال کردن اسکرول با موس (wheel)
+window.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    
+    // حرکت کارت‌ها بر اساس جهت اسکرول
+    if (e.deltaY > 0) {
+        smoothMove(1); // اسکرول به پایین (حرکت کارت‌ها به چپ)
+    } else {
+        smoothMove(-1); // اسکرول به بالا (حرکت کارت‌ها به راست)
+    }
+}, { passive: false });
+
+// غیرفعال کردن اسکرول لمسی
+document.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    
+    // حرکت کارت‌ها بر اساس جهت اسکرول لمسی
+    if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        if (!lastTouchY) {
+            lastTouchY = touch.clientY;
+            return;
+        }
+        
+        const deltaY = touch.clientY - lastTouchY;
+        
+        if (deltaY > 0) {
+            smoothMove(-1); // حرکت به بالا (کارت‌ها به راست)
+        } else if (deltaY < 0) {
+            smoothMove(1); // حرکت به پایین (کارت‌ها به چپ)
+        }
+        
+        lastTouchY = touch.clientY;
+    }
+}, { passive: false });
+
+let lastTouchY = null;
+
+document.addEventListener('touchstart', (e) => {
+    lastTouchY = e.touches[0].clientY;
+}, { passive: false });
+
+document.addEventListener('touchend', () => {
+    lastTouchY = null;
+});
+
+// همچنین کلیدهای صفحه کلید (جهت‌های بالا و پایین) را غیرفعال کنیم
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'PageUp' || e.key === 'PageDown' || e.key === 'Home' || e.key === 'End' || e.key === ' ') {
+        e.preventDefault();
+        
+        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+            smoothMove(1); // حرکت به پایین (کارت‌ها به چپ)
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+            smoothMove(-1); // حرکت به بالا (کارت‌ها به راست)
+        }
+    }
+});
+
 // ===== کارت‌های اسکرول افقی =====
 
 // تابع برای محاسبه حداکثر اسکرول مجاز
@@ -55,7 +120,7 @@ function animateScroll() {
     }
 }
 
-// تابع برای حرکت نرم با محدودیت - جهت درست شد
+// تابع برای حرکت نرم با محدودیت
 function smoothMove(direction) {
     const step = 30;
     const max = getMaxScroll();
@@ -80,25 +145,6 @@ function smoothMove(direction) {
         animateScroll();
     }
 }
-
-// رویداد اسکرول ماوس
-window.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    
-    if (e.deltaY > 0) {
-        smoothMove(1); // اسکرول به پایین
-    } else {
-        smoothMove(-1); // اسکرول به بالا
-    }
-    
-    isScrolling = true;
-    clearTimeout(scrollTimeout);
-    
-    scrollTimeout = setTimeout(() => {
-        isScrolling = false;
-    }, 150);
-    
-}, { passive: false });
 
 // تنظیم موقعیت اولیه برای نمایش ۳ کارت
 window.addEventListener("load", () => {
@@ -128,7 +174,7 @@ cardsContainer.addEventListener("dragstart", (e) => {
     e.preventDefault();
 });
 
-// قابلیت کشیدن با موس
+// قابلیت کشیدن با موس (دسکتاپ)
 let isDragging = false;
 let startX;
 let startPosition;
