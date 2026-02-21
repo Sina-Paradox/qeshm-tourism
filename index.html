@@ -11,10 +11,7 @@
 <body>
 
 <header class="header">
-    <!-- دکمه ورود/عضویت سمت راست -->
     <button class="auth-btn" onclick="window.location.href='auth.html'">ورود / عضویت</button>
-
-    <!-- منوی همبرگری سمت چپ - کلیکی -->
     <div class="menu-wrapper" id="menuWrapper">
         <div class="hamburger" id="hamburgerBtn" aria-label="منو">
             <span></span>
@@ -35,7 +32,6 @@
 </header>
 
 <main>
-    <!-- بخش بالایی (عکس و لوگو) بدون فاصله از بالا -->
     <section class="hero">
         <img src="assets/images/hero.jpg" alt="ساحل قشم" class="hero-img" loading="lazy">
         <div class="hero-content">
@@ -45,33 +41,15 @@
         </div>
     </section>
 
-    <!-- بخش پایینی (کارت‌های عمودی) -->
-    <section class="vertical-cards-section">
-        <div class="vertical-cards-container">
-            <!-- کارت ۱ -->
-            <div class="vertical-card" data-index="0">
-                <div class="card-content">اقامت</div>
-            </div>
-            <!-- کارت ۲ -->
-            <div class="vertical-card" data-index="1">
-                <div class="card-content">کافه و رستوران ها</div>
-            </div>
-            <!-- کارت ۳ (پکیج‌ها) با لینک -->
-            <div class="vertical-card" data-index="2" data-link="packages.html">
-                <div class="card-content">پکیج های گشت جزیره</div>
-            </div>
-            <!-- کارت ۴ -->
-            <div class="vertical-card" data-index="3">
-                <div class="card-content">فروشگاه‌ها</div>
-            </div>
-            <!-- کارت ۵ -->
-            <div class="vertical-card" data-index="4">
-                <div class="card-content">درباره ما</div>
-            </div>
-            <!-- کارت ۶ -->
-            <div class="vertical-card" data-index="5">
-                <div class="card-content">پشتیبانی</div>
-            </div>
+    <!-- کارت‌های اسکرول افقی برای همه دستگاه‌ها (با تغییر در موبایل) -->
+    <section class="scrolling-cards" id="scrollingCardsSection">
+        <div class="cards-container" id="cardsContainer">
+            <div class="card-item" data-link="">اقامت</div>
+            <div class="card-item" data-link="">کافه و رستوران ها</div>
+            <div class="card-item" data-link="packages.html">پکیج های گشت جزیره</div>
+            <div class="card-item" data-link="">فروشگاه‌ها</div>
+            <div class="card-item" data-link="">درباره ما</div>
+            <div class="card-item" data-link="">پشتیبانی</div>
         </div>
     </section>
 </main>

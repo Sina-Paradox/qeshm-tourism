@@ -22,65 +22,131 @@ if (hamburgerBtn && dropdownMenu) {
     });
 }
 
-// ===== مدیریت کارت‌های عمودی در صفحه اصلی =====
-const verticalCards = document.querySelectorAll('.vertical-card');
-if (verticalCards.length > 0) {
-    // غیرفعال کردن اسکرول عمودی کل صفحه
+// ===== تشخیص حالت موبایل (عمودی) یا دسکتاپ =====
+function isMobilePortrait() {
+    return window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+}
+
+// ===== کارت‌های اسکرول افقی (برای دسکتاپ) =====
+const cardsContainer = document.getElementById("cardsContainer");
+const cardItems = document.querySelectorAll('.card-item');
+
+if (cardsContainer && !isMobilePortrait()) {
+    // کد اسکرول افقی (همان کد قبلی با کمی ریفکتور)
+    let position = 0;
+    let targetPosition = 0;
+    let animationFrame = null;
+    let isDragging = false;
+    let startX, startPosition;
+
+    function getMaxScroll() {
+        const containerWidth = cardsContainer.parentElement.clientWidth;
+        const contentWidth = cardsContainer.scrollWidth;
+        const containerPadding = 40; // approx
+        return Math.max(0, contentWidth - containerWidth + containerPadding);
+    }
+
+    function animateScroll() {
+        const diff = targetPosition - position;
+        if (Math.abs(diff) > 0.2) {
+            position += diff * 0.05;
+            cardsContainer.style.transform = `translateX(${position}px)`;
+            animationFrame = requestAnimationFrame(animateScroll);
+        } else {
+            position = targetPosition;
+            cardsContainer.style.transform = `translateX(${position}px)`;
+            animationFrame = null;
+        }
+    }
+
+    function smoothMove(direction) {
+        const step = 15;
+        const max = getMaxScroll();
+        if (direction > 0) { // move left
+            targetPosition -= step;
+        } else {
+            targetPosition += step;
+        }
+        if (targetPosition < -max) targetPosition = -max;
+        if (targetPosition > 0) targetPosition = 0;
+        if (!animationFrame) animateScroll();
+    }
+
+    // رویدادهای اسکرول
     window.addEventListener('wheel', (e) => {
         e.preventDefault();
-        if (e.deltaY > 0) {
-            nextCard();
-        } else {
-            prevCard();
+        if (e.deltaY > 0) smoothMove(0.5);
+        else smoothMove(-0.5);
+    }, { passive: false });
+
+    // رویدادهای لمسی برای کشیدن افقی
+    cardsContainer.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        startX = e.pageX;
+        startPosition = targetPosition;
+        cardsContainer.style.cursor = "grabbing";
+        cardsContainer.style.transition = "none";
+        if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+            animationFrame = null;
         }
-    }, { passive: false });
-
-    // رویدادهای لمسی
-    let touchStartY = null;
-    document.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-    }, { passive: false });
-
-    document.addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        if (touchStartY !== null) {
-            const touchEndY = e.touches[0].clientY;
-            const diff = touchStartY - touchEndY;
-            if (Math.abs(diff) > 20) {
-                if (diff > 0) {
-                    nextCard();
-                } else {
-                    prevCard();
-                }
-                touchStartY = null;
-            }
-        }
-    }, { passive: false });
-
-    document.addEventListener('touchend', () => {
-        touchStartY = null;
     });
 
-    // کلیدهای صفحه کلید
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-            e.preventDefault();
-            nextCard();
-        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            e.preventDefault();
-            prevCard();
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const diff = e.pageX - startX;
+        const max = getMaxScroll();
+        targetPosition = startPosition + diff * 0.3;
+        if (targetPosition > 0) targetPosition = 0;
+        if (targetPosition < -max) targetPosition = -max;
+        position = targetPosition;
+        cardsContainer.style.transform = `translateX(${targetPosition}px)`;
+    });
+
+    window.addEventListener("mouseup", () => {
+        if (isDragging) {
+            isDragging = false;
+            cardsContainer.style.cursor = "grab";
+            cardsContainer.style.transition = "transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)";
+            position = targetPosition;
+            if (!animationFrame) animateScroll();
         }
+    });
+
+    // کلیک روی کارت‌ها
+    cardItems.forEach(card => {
+        card.addEventListener('click', function() {
+            const link = this.dataset.link;
+            if (link) window.location.href = link;
+        });
+    });
+
+    // مقدار اولیه
+    targetPosition = -20;
+    position = -20;
+    cardsContainer.style.transform = `translateX(${position}px)`;
+}
+
+// ===== حالت موبایل (عمودی) - کارت‌های عمودی =====
+if (isMobilePortrait() && cardItems.length > 0) {
+    // ابتدا کلاس‌های مورد نیاز را به کارت‌ها اضافه می‌کنیم
+    cardItems.forEach((card, index) => {
+        card.classList.remove('active', 'prev', 'next');
+        if (index === 0) card.classList.add('active');
+        else if (index === 1) card.classList.add('next');
+        else if (index === cardItems.length - 1) card.classList.add('prev');
     });
 
     let currentIndex = 0;
     let isAnimating = false;
-    const totalCards = verticalCards.length;
+    const totalCards = cardItems.length;
 
     function updateCards(newIndex) {
         if (isAnimating || newIndex === currentIndex) return;
         isAnimating = true;
 
-        verticalCards.forEach((card, index) => {
+        cardItems.forEach((card, index) => {
             card.classList.remove('active', 'prev', 'next');
             if (index === newIndex) {
                 card.classList.add('active');
@@ -98,51 +164,71 @@ if (verticalCards.length > 0) {
     }
 
     function nextCard() {
-        const nextIndex = (currentIndex + 1) % totalCards;
-        updateCards(nextIndex);
+        updateCards((currentIndex + 1) % totalCards);
     }
 
     function prevCard() {
-        const prevIndex = (currentIndex - 1 + totalCards) % totalCards;
-        updateCards(prevIndex);
+        updateCards((currentIndex - 1 + totalCards) % totalCards);
     }
 
-    // کلیک روی کارت (اگر لینک داشته باشد)
-    verticalCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const link = this.dataset.link;
-            if (link) {
-                window.location.href = link;
+    // رویدادهای اسکرول عمودی برای موبایل
+    window.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.deltaY > 0) nextCard();
+        else prevCard();
+    }, { passive: false });
+
+    let touchStartY = null;
+    document.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: false });
+
+    document.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (touchStartY !== null) {
+            const diff = touchStartY - e.touches[0].clientY;
+            if (Math.abs(diff) > 20) {
+                if (diff > 0) nextCard();
+                else prevCard();
+                touchStartY = null;
             }
-        });
+        }
+    }, { passive: false });
+
+    document.addEventListener('touchend', () => {
+        touchStartY = null;
     });
 
-    // فعال کردن اولین کارت
-    verticalCards[0].classList.add('active');
-    for (let i = 1; i < totalCards; i++) {
-        if (i === 1) verticalCards[i].classList.add('next');
-        else if (i === totalCards - 1) verticalCards[i].classList.add('prev');
-    }
+    // کلیک روی کارت
+    cardItems.forEach(card => {
+        card.addEventListener('click', function() {
+            const link = this.dataset.link;
+            if (link) window.location.href = link;
+        });
+    });
 }
 
-// ===== رفع مشکل زوم در inputهای صفحه auth =====
-// با کلیک بیرون از input، صفحه به حالت عادی برمی‌گردد
+// ===== رفع مشکل زوم در صفحه auth =====
 if (document.querySelector('.auth-page')) {
     const inputs = document.querySelectorAll('.glass-input');
     inputs.forEach(input => {
         input.addEventListener('blur', function() {
-            // اسکرول به موقعیت اصلی (اختیاری)
             window.scrollTo(0, 0);
         });
     });
     
-    // کلیک روی document برای برگرداندن زوم
     document.addEventListener('touchstart', function(e) {
         if (!e.target.classList.contains('glass-input')) {
-            // اگر روی input نبود، فوکوس را از input بردار
             if (document.activeElement && document.activeElement.classList.contains('glass-input')) {
                 document.activeElement.blur();
             }
         }
     });
 }
+
+// ===== تنظیم مجدد در تغییر اندازه صفحه =====
+window.addEventListener('resize', function() {
+    // می‌توانیم صفحه را ریلود کنیم یا وضعیت را به‌روز کنیم (ساده‌ترین کار: ریلود)
+    // اما برای تجربه بهتر، می‌توانیم وضعیت را تغییر دهیم
+    location.reload(); // ساده اما مؤثر
+});
