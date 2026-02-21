@@ -152,11 +152,11 @@ body {
     width: 90%;
 }
 
-/* لوگو - ریسپانسیو و هماهنگ با صفحه */
+/* لوگو - اندازه نصف شد */
 .logo-img {
-    width: min(40%, 280px);  /* حداکثر 280px در دسکتاپ، 40% عرض در موبایل */
+    width: min(20%, 140px);  /* کاهش یافته */
     height: auto;
-    margin-bottom: 10px;      /* فاصله مناسب با متن زیر */
+    margin-bottom: 8px;      /* فاصله کمتر */
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -246,12 +246,12 @@ body {
     }
 
     .cards-container {
-        display: block;  /* تغییر از flex به block برای جایگذاری absolute */
+        display: block;
         position: relative;
         width: 100%;
         height: 100%;
         padding: 0;
-        transform: none !important; /* غیرفعال کردن transform افقی */
+        transform: none !important;
         transition: none;
     }
 
@@ -333,8 +333,8 @@ body {
 }
 
 .auth-left .logo-img {
-    width: min(50%, 300px);   /* کمی بزرگتر از صفحه اصلی */
-    margin-bottom: 15px;
+    width: min(25%, 150px);   /* نصف شد */
+    margin-bottom: 10px;
 }
 
 .auth-left .english-slogan {
@@ -458,7 +458,7 @@ body {
         padding-bottom: 20px;
     }
     .auth-left .logo-img {
-        width: min(40%, 180px);
+        width: min(25%, 100px); /* کوچکتر در موبایل */
     }
     .auth-right {
         flex: none;
@@ -473,7 +473,7 @@ body {
 
 @media (max-width: 480px) {
     .logo-img {
-        width: min(50%, 150px);
+        width: min(30%, 90px);  /* حتی کوچکتر */
     }
     .english-slogan {
         font-size: clamp(0.8rem, 3vw, 1rem);
