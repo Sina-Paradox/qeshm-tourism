@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>قشم | جزیره شگفتی‌ها</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
@@ -35,24 +35,43 @@
 </header>
 
 <main>
+    <!-- بخش بالایی (عکس و لوگو) بدون فاصله از بالا -->
     <section class="hero">
         <img src="assets/images/hero.jpg" alt="ساحل قشم" class="hero-img" loading="lazy">
         <div class="hero-content">
-            <!-- لوگو به صورت عکس -->
             <img src="assets/images/logo-white.PNG" alt="قشم" class="logo-img">
             <div class="english-slogan">Build your own experience</div>
             <div class="persian-tagline">سفری فراموش نشدنی در قشم با کی تل</div>
         </div>
     </section>
 
-    <section class="scrolling-cards">
-        <div class="cards-container" id="cardsContainer">
-            <div class="card-item">اقامت</div>
-            <div class="card-item">کافه و رستوران ها</div>
-            <div class="card-item" onclick="window.location.href='packages.html'">پکیج های گشت جزیره</div>
-            <div class="card-item">فروشگاه‌ها</div>
-            <div class="card-item">درباره ما</div>
-            <div class="card-item">پشتیبانی</div>
+    <!-- بخش پایینی (کارت‌های عمودی) -->
+    <section class="vertical-cards-section">
+        <div class="vertical-cards-container">
+            <!-- کارت ۱ -->
+            <div class="vertical-card" data-index="0">
+                <div class="card-content">اقامت</div>
+            </div>
+            <!-- کارت ۲ -->
+            <div class="vertical-card" data-index="1">
+                <div class="card-content">کافه و رستوران ها</div>
+            </div>
+            <!-- کارت ۳ (پکیج‌ها) با لینک -->
+            <div class="vertical-card" data-index="2" data-link="packages.html">
+                <div class="card-content">پکیج های گشت جزیره</div>
+            </div>
+            <!-- کارت ۴ -->
+            <div class="vertical-card" data-index="3">
+                <div class="card-content">فروشگاه‌ها</div>
+            </div>
+            <!-- کارت ۵ -->
+            <div class="vertical-card" data-index="4">
+                <div class="card-content">درباره ما</div>
+            </div>
+            <!-- کارت ۶ -->
+            <div class="vertical-card" data-index="5">
+                <div class="card-content">پشتیبانی</div>
+            </div>
         </div>
     </section>
 </main>

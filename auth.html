@@ -2,8 +2,10 @@
 <html lang="fa">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ورود | عضویت - قشم</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body class="auth-page">
 
@@ -34,13 +36,14 @@
 <div class="auth-container">
     <div class="auth-left">
         <img src="assets/images/logo-white.PNG" alt="قشم" class="logo-img">
-        <p class="slogan">جزیره شگفتی‌های ایران</p>
+        <div class="english-slogan">Build your own experience</div>
+        <div class="persian-tagline">سفری فراموش نشدنی در قشم با کی تل</div>
     </div>
 
     <div class="auth-right">
         <div class="login-box glass">
-            <input type="text" placeholder="نام کاربری" class="glass-input">
-            <input type="password" placeholder="رمز عبور" class="glass-input">
+            <input type="text" placeholder="نام کاربری" class="glass-input" id="username">
+            <input type="password" placeholder="رمز عبور" class="glass-input" id="password">
             <button class="glass-btn" onclick="window.location.href='index.html'">ورود</button>
         </div>
         <div class="register-box glass">
@@ -49,7 +52,7 @@
     </div>
 </div>
 
-<!-- عکس پس زمینه به صورت جداگانه -->
+<!-- عکس پس زمینه -->
 <img src="assets/images/hero2.jpg" alt="ساحل قشم" class="auth-bg" loading="lazy">
 
 <script src="assets/js/main.js"></script>
