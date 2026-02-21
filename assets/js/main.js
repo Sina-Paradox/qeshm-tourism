@@ -221,3 +221,12 @@ window.addEventListener("mouseup", () => {
 });
 
 cardsContainer.style.cursor = "grab";
+
+// ===== اضافه کردن رویداد کلیک به کارت پکیج‌های سفر =====
+const packageCard = document.querySelector('.card-item:nth-child(3)'); // پکیج های گشت جزیره
+if (packageCard) {
+    packageCard.addEventListener('click', function() {
+        window.location.href = 'packages.html';
+    });
+    packageCard.style.cursor = 'pointer';
+}
