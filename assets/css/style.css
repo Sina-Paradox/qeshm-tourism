@@ -157,19 +157,35 @@ body {
 .logo-img {
     max-width: 350px;
     height: auto;
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* کاهش فاصله */
 }
 
-.auth-logo {
-    filter: brightness(0) invert(1);
-    max-width: 300px;
-    margin: 0 auto 15px;
-}
-
-.slogan {
-    font-size: 1.6rem;
+/* متن انگلیسی جدید */
+.english-slogan {
+    font-family: 'Poppins', 'Montserrat', 'Vazirmatn', sans-serif;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
     opacity: 0.95;
-    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* متن فارسی جدید */
+.persian-tagline {
+    font-family: 'Vazirmatn', sans-serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+    font-weight: 400;
+    opacity: 0.9;
+    margin-top: 5px;
+    letter-spacing: 0.5px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    padding: 6px 18px;
+    border-radius: 40px;
+    display: inline-block;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 /* ===== کارت‌های اسکرول افقی ===== */
@@ -211,6 +227,7 @@ body {
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     user-select: none;
     letter-spacing: 0.5px;
+    cursor: pointer;
 }
 
 .card-item:hover {
@@ -254,6 +271,21 @@ body {
     color: white;
     text-shadow: 0 2px 12px rgba(0,0,0,0.5);
     padding: 20px;
+}
+
+.auth-left .logo-img {
+    max-width: min(350px, 80%);
+    margin-bottom: 15px;
+}
+
+.auth-left .english-slogan {
+    font-size: clamp(1.1rem, 3vw, 1.8rem);
+    margin-bottom: 8px;
+}
+
+.auth-left .persian-tagline {
+    font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+    padding: 5px 15px;
 }
 
 .auth-right {
@@ -327,8 +359,12 @@ body {
         max-width: 280px;
     }
     
-    .slogan {
-        font-size: 1.4rem;
+    .english-slogan {
+        font-size: clamp(1rem, 3.5vw, 1.6rem);
+    }
+    
+    .persian-tagline {
+        font-size: clamp(0.8rem, 2.2vw, 1.1rem);
     }
     
     .card-item {
@@ -357,11 +393,17 @@ body {
     
     .logo-img {
         max-width: 220px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
     }
     
-    .slogan {
-        font-size: 1.2rem;
+    .english-slogan {
+        font-size: clamp(0.9rem, 3vw, 1.3rem);
+        letter-spacing: 1px;
+    }
+    
+    .persian-tagline {
+        font-size: clamp(0.75rem, 2vw, 1rem);
+        padding: 4px 12px;
     }
     
     .card-item {
@@ -410,6 +452,54 @@ body {
     .cards-container {
         gap: 20px;
     }
+    
+    /* تنظیمات ویژه صفحه احراز هویت برای موبایل */
+    .auth-container {
+        flex-direction: column;
+        padding-top: 70px;
+    }
+    
+    .auth-left {
+        flex: none;
+        height: 45vh;
+        justify-content: flex-end;
+        padding-bottom: 30px;
+    }
+    
+    .auth-left .logo-img {
+        max-width: min(250px, 70%);
+        margin-bottom: 10px;
+    }
+    
+    .auth-left .english-slogan {
+        font-size: clamp(0.9rem, 2.8vw, 1.2rem);
+    }
+    
+    .auth-left .persian-tagline {
+        font-size: clamp(0.75rem, 2.2vw, 1rem);
+    }
+    
+    .auth-right {
+        flex: none;
+        height: 55vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .glass {
+        width: min(380px, 85%);
+        padding: 25px 20px;
+        border-radius: 40px;
+        margin: 0 auto;
+    }
+    
+    .glass:first-child {
+        margin-bottom: 0;
+    }
 }
 
 /* موبایل کوچک */
@@ -421,11 +511,17 @@ body {
     
     .logo-img {
         max-width: 180px;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
     
-    .slogan {
-        font-size: 1rem;
+    .english-slogan {
+        font-size: clamp(0.8rem, 2.8vw, 1.1rem);
+        letter-spacing: 0.5px;
+    }
+    
+    .persian-tagline {
+        font-size: clamp(0.65rem, 2vw, 0.9rem);
+        padding: 3px 10px;
     }
     
     .card-item {
@@ -476,24 +572,24 @@ body {
         gap: 15px;
     }
     
-    /* تنظیمات صفحه احراز هویت برای موبایل */
-    .auth-container {
-        flex-direction: column;
-        padding-top: 70px;
+    /* تنظیمات صفحه احراز هویت برای موبایل کوچک */
+    .auth-left {
+        height: 40vh;
+        padding-bottom: 20px;
     }
     
-    .auth-left {
-        padding: 20px 15px 10px;
+    .auth-left .logo-img {
+        max-width: min(200px, 65%);
     }
     
     .auth-right {
-        padding: 10px 15px 30px;
+        height: 60vh;
     }
     
     .glass {
-        width: 280px;
-        padding: 25px 20px;
-        border-radius: 40px;
+        width: min(320px, 90%);
+        padding: 20px 18px;
+        gap: 15px;
     }
     
     .glass-input {
@@ -517,8 +613,12 @@ body {
         max-width: 150px;
     }
     
-    .slogan {
-        font-size: 0.9rem;
+    .english-slogan {
+        font-size: 0.8rem;
+    }
+    
+    .persian-tagline {
+        font-size: 0.7rem;
     }
     
     .card-item {
@@ -538,6 +638,14 @@ body {
         width: 240px;
         padding: 20px 15px;
     }
+    
+    .auth-left {
+        height: 35vh;
+    }
+    
+    .auth-right {
+        height: 65vh;
+    }
 }
 
 /* تنظیم ارتفاع برای نمایشگرهای کوتاه */
@@ -549,6 +657,18 @@ body {
     .card-item {
         height: 110px;
     }
+    
+    .auth-left {
+        height: 40vh;
+    }
+    
+    .auth-right {
+        height: 60vh;
+    }
+    
+    .glass {
+        padding: 25px 25px;
+    }
 }
 
 @media (max-height: 600px) {
@@ -558,6 +678,26 @@ body {
     
     .card-item {
         height: 90px;
+    }
+    
+    .auth-left {
+        height: 35vh;
+    }
+    
+    .auth-right {
+        height: 65vh;
+    }
+    
+    .glass {
+        padding: 20px 25px;
+    }
+    
+    .glass-input {
+        padding: 12px 18px;
+    }
+    
+    .glass-btn {
+        padding: 12px;
     }
 }
 
@@ -569,5 +709,13 @@ body {
     .card-item {
         height: 70px;
         font-size: 0.9rem;
+    }
+    
+    .auth-left {
+        height: 30vh;
+    }
+    
+    .auth-right {
+        height: 70vh;
     }
 }
