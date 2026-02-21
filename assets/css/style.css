@@ -23,7 +23,7 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 1.5vh 2vw; /* ریسپانسیو با viewport */
+    padding: 20px 40px;
     z-index: 1000;
     background: transparent;
 }
@@ -32,14 +32,13 @@ body {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.3);
-    padding: 1.2vh 2.5vw;
+    padding: 12px 28px;
     border-radius: 40px;
     cursor: pointer;
     font-weight: 500;
-    font-size: clamp(0.8rem, 2vw, 1.1rem);
+    font-size: 1.1rem;
     transition: all 0.3s ease;
     color: #0a1c2f;
-    white-space: nowrap;
 }
 
 .auth-btn:hover {
@@ -56,7 +55,7 @@ body {
 .hamburger {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(12px);
-    padding: 1vh 1vw;
+    padding: 10px 12px;
     border-radius: 25px;
     cursor: pointer;
     border: 1px solid rgba(255,255,255,0.3);
@@ -65,10 +64,10 @@ body {
 
 .hamburger span {
     display: block;
-    width: 2.5vh;
-    height: 0.3vh;
+    width: 22px;
+    height: 2.5px;
     background: #0a1c2f;
-    margin: 0.4vh 0;
+    margin: 4px 0;
     border-radius: 4px;
     transition: 0.3s;
 }
@@ -79,11 +78,11 @@ body {
 
 .dropdown {
     position: absolute;
-    top: 6vh;
+    top: 60px;
     right: 0;
     background: rgba(255,255,255,0.2);
     backdrop-filter: blur(16px);
-    padding: 1.5vh;
+    padding: 12px;
     border-radius: 20px;
     visibility: hidden;
     opacity: 0;
@@ -103,18 +102,18 @@ body {
 
 .drop-item {
     background: rgba(255,255,255,0.3);
-    padding: 1vh 1.5vw;
+    padding: 10px 14px;
     border-radius: 30px;
     text-decoration: none;
     color: #0a1c2f;
     font-weight: 500;
-    font-size: clamp(0.8rem, 2vw, 0.95rem);
+    font-size: 0.95rem;
     transition: all 0.2s ease;
     text-align: center;
     display: block;
     cursor: pointer;
     border: 1px solid rgba(255,255,255,0.2);
-    margin-bottom: 0.8vh;
+    margin-bottom: 8px;
 }
 
 .drop-item:last-child {
@@ -153,86 +152,148 @@ body {
     width: 90%;
 }
 
-/* لوگو با اندازه کاملاً ریسپانسیو - 30% عرض viewport ولی محدود */
+/* لوگو - ریسپانسیو و هماهنگ با صفحه */
 .logo-img {
-    width: 30vw;
-    max-width: 350px;
-    min-width: 150px;
+    width: min(40%, 280px);  /* حداکثر 280px در دسکتاپ، 40% عرض در موبایل */
     height: auto;
-    margin-bottom: 1vh;
+    margin-bottom: 10px;      /* فاصله مناسب با متن زیر */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .english-slogan {
     font-family: 'Poppins', 'Montserrat', 'Vazirmatn', sans-serif;
-    font-size: clamp(1.2rem, 5vw, 2.5rem);
+    font-size: clamp(1rem, 4vw, 1.8rem);
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 0.5vh;
+    margin-bottom: 8px;
     opacity: 0.95;
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .persian-tagline {
     font-family: 'Vazirmatn', sans-serif;
-    font-size: clamp(0.9rem, 3vw, 1.3rem);
+    font-size: clamp(0.8rem, 2.5vw, 1.2rem);
     font-weight: 400;
     opacity: 0.9;
     letter-spacing: 0.5px;
     background: rgba(255,255,255,0.15);
     backdrop-filter: blur(4px);
-    padding: 0.8vh 2vw;
+    padding: 6px 18px;
     border-radius: 40px;
     display: inline-block;
     border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* ===== کارت‌های اسکرول افقی (پیش‌فرض برای همه) ===== */
+/* ===== کارت‌های اسکرول افقی (پیش‌فرض برای دسکتاپ) ===== */
 .scrolling-cards {
-    height: 50vh;
-    width: 100%;
     overflow: hidden;
+    width: 100%;
+    padding: 20px 0;
     position: relative;
+    flex: 1;
     display: flex;
     align-items: center;
-    background: transparent;
 }
 
 .cards-container {
     display: flex;
-    gap: 2vw;
+    gap: 30px;
     transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
     will-change: transform;
-    padding: 0 2vw;
+    padding: 0 20px;
 }
 
 .card-item {
-    min-width: 25vw;
-    height: 30vh;
-    background: rgba(255,255,255,0.25);
+    min-width: 320px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(16px);
-    border-radius: 5vh;
+    border-radius: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-size: 1.5rem;
     font-weight: 600;
-    color: #0a1c2f;
-    border: 2px solid rgba(255,255,255,0.4);
-    transition: all 0.4s ease;
+    color: white;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.5);
     flex: 0 0 auto;
-    padding: 2vh 3vw;
+    padding: 20px 35px;
     white-space: nowrap;
-    box-shadow: 0 2vh 4vh rgba(0,0,0,0.1);
     user-select: none;
+    letter-spacing: 0.5px;
     cursor: pointer;
+    transition: all 0.4s ease;
 }
 
 .card-item:hover {
-    transform: scale(1.03) translateY(-0.5vh);
-    background: rgba(255,255,255,0.7);
-    box-shadow: 0 3vh 5vh rgba(0,0,0,0.15);
+    transform: scale(1.03) translateY(-3px);
+    background: rgba(255,255,255,0.35);
     border-color: rgba(255,255,255,0.8);
+}
+
+/* ===== حالت موبایل عمودی (کارت‌ها به صورت عمودی ظاهر می‌شوند) ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+    .scrolling-cards {
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cards-container {
+        display: block;  /* تغییر از flex به block برای جایگذاری absolute */
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        transform: none !important; /* غیرفعال کردن transform افقی */
+        transition: none;
+    }
+
+    .card-item {
+        position: absolute;
+        width: 70%;
+        height: 70%;
+        min-width: auto;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: clamp(1.2rem, 5vw, 2rem);
+        white-space: normal;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .card-item.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+        transform: translate(-50%, -50%) scale(1);
+        z-index: 10;
+    }
+
+    .card-item.prev {
+        opacity: 0;
+        visibility: visible;
+        transform: translate(-50%, -150%) scale(0.8);
+        z-index: 5;
+    }
+
+    .card-item.next {
+        opacity: 0;
+        visibility: visible;
+        transform: translate(-50%, 50%) scale(0.8);
+        z-index: 5;
+    }
 }
 
 /* ===== صفحه احراز هویت ===== */
@@ -268,24 +329,22 @@ body {
     align-items: center;
     color: white;
     text-shadow: 0 2px 12px rgba(0,0,0,0.5);
-    padding: 2vh;
+    padding: 20px;
 }
 
 .auth-left .logo-img {
-    width: 25vw;
-    max-width: 300px;
-    min-width: 120px;
-    margin-bottom: 1vh;
+    width: min(50%, 300px);   /* کمی بزرگتر از صفحه اصلی */
+    margin-bottom: 15px;
 }
 
 .auth-left .english-slogan {
-    font-size: clamp(1rem, 4vw, 2rem);
-    margin-bottom: 0.5vh;
+    font-size: clamp(1rem, 3vw, 1.8rem);
+    margin-bottom: 8px;
 }
 
 .auth-left .persian-tagline {
-    font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-    padding: 0.5vh 1.5vw;
+    font-size: clamp(0.8rem, 2.2vw, 1.2rem);
+    padding: 5px 15px;
 }
 
 .auth-right {
@@ -294,32 +353,30 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 3vh;
-    padding: 2vh;
+    gap: 30px;
+    padding: 20px;
 }
 
 .glass {
     background: rgba(255,255,255,0.2);
     backdrop-filter: blur(16px);
-    padding: 4vh 3vw;
-    border-radius: 5vh;
-    width: 30vw;
-    min-width: 300px;
-    max-width: 400px;
+    padding: 35px 30px;
+    border-radius: 50px;
+    width: 380px;
     display: flex;
     flex-direction: column;
-    gap: 2vh;
+    gap: 20px;
     border: 1px solid rgba(255,255,255,0.3);
-    box-shadow: 0 2vh 4vh rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .glass-input {
-    padding: 2vh 2vw;
-    border-radius: 5vh;
+    padding: 16px 20px;
+    border-radius: 50px;
     border: none;
     background: rgba(255,255,255,0.5);
     backdrop-filter: blur(4px);
-    font-size: 16px; /* جلوگیری از زوم */
+    font-size: 16px;
     transition: all 0.2s;
 }
 
@@ -330,13 +387,13 @@ body {
 }
 
 .glass-btn {
-    padding: 2vh;
-    border-radius: 5vh;
+    padding: 16px;
+    border-radius: 50px;
     border: none;
     background: #00aaff;
     color: white;
     font-weight: bold;
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-size: 1.2rem;
     cursor: pointer;
     transition: all 0.2s ease;
     border: 1px solid rgba(255,255,255,0.3);
@@ -345,108 +402,111 @@ body {
 .glass-btn:hover {
     background: #0088cc;
     transform: scale(1.03);
-    box-shadow: 0 1vh 2vh rgba(0,136,204,0.4);
+    box-shadow: 0 5px 15px rgba(0,136,204,0.4);
 }
 
-/* ===== مدیا کوئری برای موبایل (صفحه عمودی) ===== */
-@media (max-width: 768px) and (orientation: portrait) {
-    /* تغییر کارت‌های افقی به عمودی */
-    .scrolling-cards {
-        height: 60vh; /* نیمه پایینی بزرگتر */
+/* ===== ریسپانسیو عمومی ===== */
+@media (max-width: 1024px) {
+    .header {
+        padding: 15px 30px;
     }
-
-    .cards-container {
-        display: block; /*取消 flex، از سیستم موقعیت‌یابی مطلق استفاده می‌کنیم */
-        position: relative;
-        height: 100%;
-        width: 100%;
+    .auth-btn {
+        padding: 10px 24px;
+        font-size: 1rem;
     }
-
     .card-item {
-        position: absolute;
-        width: 80vw; /* 80% عرض صفحه */
-        height: 50vh; /* 50% ارتفاع نیمه پایینی */
-        max-height: 300px;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%) scale(0.9);
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: all 0.5s ease;
-        margin: 0;
-        padding: 3vh 5vw;
-        font-size: clamp(1.2rem, 5vw, 2rem);
-        white-space: normal;
-        text-align: center;
-        min-width: auto;
-        border-radius: 8vh;
+        min-width: 280px;
+        height: 140px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 12px 20px;
+    }
+    .auth-btn {
+        padding: 8px 18px;
+        font-size: 0.9rem;
+    }
+    .hamburger {
+        padding: 8px 10px;
+    }
+    .hamburger span {
+        width: 20px;
+        height: 2px;
+        margin: 3px 0;
+    }
+    .dropdown {
+        min-width: 160px;
+        top: 50px;
+    }
+    .drop-item {
+        padding: 8px 12px;
+        font-size: 0.85rem;
     }
 
-    .card-item.active {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: all;
-        transform: translate(-50%, -50%) scale(1);
-        z-index: 10;
-    }
-
-    .card-item.prev {
-        opacity: 0;
-        visibility: visible;
-        transform: translate(-50%, -150%) scale(0.8);
-        z-index: 5;
-    }
-
-    .card-item.next {
-        opacity: 0;
-        visibility: visible;
-        transform: translate(-50%, 50%) scale(0.8);
-        z-index: 5;
-    }
-
-    /* تنظیمات صفحه ورود برای موبایل */
+    /* صفحه auth در موبایل */
     .auth-container {
         flex-direction: column;
+        padding-top: 70px;
     }
-
     .auth-left {
+        flex: none;
         height: 40vh;
         justify-content: flex-end;
-        padding-bottom: 3vh;
+        padding-bottom: 20px;
     }
-
     .auth-left .logo-img {
-        width: 40vw;
+        width: min(40%, 180px);
     }
-
     .auth-right {
+        flex: none;
         height: 60vh;
-        justify-content: flex-start;
-        padding-top: 5vh;
+        justify-content: center;
     }
-
     .glass {
-        width: 85vw;
-        padding: 3vh 5vw;
+        width: min(380px, 85%);
+        padding: 25px 20px;
     }
 }
 
-@media (max-width: 480px) and (orientation: portrait) {
+@media (max-width: 480px) {
+    .logo-img {
+        width: min(50%, 150px);
+    }
+    .english-slogan {
+        font-size: clamp(0.8rem, 3vw, 1rem);
+    }
+    .persian-tagline {
+        font-size: clamp(0.65rem, 2vw, 0.9rem);
+        padding: 4px 10px;
+    }
     .card-item {
-        width: 85vw;
-        height: 45vh;
-    }
-
-    .auth-left .logo-img {
-        width: 50vw;
-    }
-
-    .auth-left .english-slogan {
+        min-width: 220px;
+        height: 120px;
         font-size: 1.1rem;
     }
+    .glass {
+        width: min(320px, 90%);
+        padding: 20px 15px;
+    }
+    .glass-input {
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+    .glass-btn {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
 
-    .auth-left .persian-tagline {
-        font-size: 0.9rem;
+/* تنظیم ارتفاع برای نمایشگرهای کوتاه */
+@media (max-height: 700px) {
+    .hero {
+        height: 45vh;
+    }
+    .card-item {
+        height: 120px;
     }
 }

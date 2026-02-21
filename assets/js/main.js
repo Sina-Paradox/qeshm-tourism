@@ -22,17 +22,17 @@ if (hamburgerBtn && dropdownMenu) {
     });
 }
 
-// ===== تشخیص حالت موبایل (عمودی) یا دسکتاپ =====
+// ===== دریافت المان‌های کارت =====
+const cardsContainer = document.getElementById("cardsContainer");
+const cardItems = document.querySelectorAll('.card-item');
+
+// ===== تشخیص حالت موبایل عمودی =====
 function isMobilePortrait() {
     return window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 }
 
-// ===== کارت‌های اسکرول افقی (برای دسکتاپ) =====
-const cardsContainer = document.getElementById("cardsContainer");
-const cardItems = document.querySelectorAll('.card-item');
-
+// ===== حالت دسکتاپ (افقی) =====
 if (cardsContainer && !isMobilePortrait()) {
-    // کد اسکرول افقی (همان کد قبلی با کمی ریفکتور)
     let position = 0;
     let targetPosition = 0;
     let animationFrame = null;
@@ -42,7 +42,7 @@ if (cardsContainer && !isMobilePortrait()) {
     function getMaxScroll() {
         const containerWidth = cardsContainer.parentElement.clientWidth;
         const contentWidth = cardsContainer.scrollWidth;
-        const containerPadding = 40; // approx
+        const containerPadding = 40;
         return Math.max(0, contentWidth - containerWidth + containerPadding);
     }
 
@@ -62,7 +62,7 @@ if (cardsContainer && !isMobilePortrait()) {
     function smoothMove(direction) {
         const step = 15;
         const max = getMaxScroll();
-        if (direction > 0) { // move left
+        if (direction > 0) {
             targetPosition -= step;
         } else {
             targetPosition += step;
@@ -72,14 +72,14 @@ if (cardsContainer && !isMobilePortrait()) {
         if (!animationFrame) animateScroll();
     }
 
-    // رویدادهای اسکرول
+    // رویداد اسکرول موس
     window.addEventListener('wheel', (e) => {
         e.preventDefault();
         if (e.deltaY > 0) smoothMove(0.5);
         else smoothMove(-0.5);
     }, { passive: false });
 
-    // رویدادهای لمسی برای کشیدن افقی
+    // درگ با موس
     cardsContainer.addEventListener("mousedown", (e) => {
         isDragging = true;
         startX = e.pageX;
@@ -128,9 +128,9 @@ if (cardsContainer && !isMobilePortrait()) {
     cardsContainer.style.transform = `translateX(${position}px)`;
 }
 
-// ===== حالت موبایل (عمودی) - کارت‌های عمودی =====
+// ===== حالت موبایل عمودی =====
 if (isMobilePortrait() && cardItems.length > 0) {
-    // ابتدا کلاس‌های مورد نیاز را به کارت‌ها اضافه می‌کنیم
+    // تنظیم کلاس‌های اولیه
     cardItems.forEach((card, index) => {
         card.classList.remove('active', 'prev', 'next');
         if (index === 0) card.classList.add('active');
@@ -171,13 +171,14 @@ if (isMobilePortrait() && cardItems.length > 0) {
         updateCards((currentIndex - 1 + totalCards) % totalCards);
     }
 
-    // رویدادهای اسکرول عمودی برای موبایل
+    // اسکرول موس عمودی
     window.addEventListener('wheel', (e) => {
         e.preventDefault();
         if (e.deltaY > 0) nextCard();
         else prevCard();
     }, { passive: false });
 
+    // رویداد لمسی
     let touchStartY = null;
     document.addEventListener('touchstart', (e) => {
         touchStartY = e.touches[0].clientY;
@@ -226,9 +227,8 @@ if (document.querySelector('.auth-page')) {
     });
 }
 
-// ===== تنظیم مجدد در تغییر اندازه صفحه =====
+// ===== تنظیم مجدد در تغییر اندازه صفحه (اختیاری) =====
 window.addEventListener('resize', function() {
-    // می‌توانیم صفحه را ریلود کنیم یا وضعیت را به‌روز کنیم (ساده‌ترین کار: ریلود)
-    // اما برای تجربه بهتر، می‌توانیم وضعیت را تغییر دهیم
-    location.reload(); // ساده اما مؤثر
+    // برای سادگی، صفحه ریلود می‌شود تا وضعیت به‌درستی اعمال شود
+    location.reload();
 });
