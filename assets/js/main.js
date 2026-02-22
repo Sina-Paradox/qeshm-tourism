@@ -260,12 +260,3 @@ if (document.querySelector('.auth-page')) {
         }
     });
 }
-
-// ===== تنظیم مجدد در تغییر اندازه صفحه با debounce =====
-let resizeTimer;
-window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-        location.reload();
-    }, 250);
-});
