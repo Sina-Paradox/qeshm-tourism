@@ -1,0 +1,146 @@
+/* ===== صفحه درباره ما (مشابه پکیج‌ها با یک کارت) ===== */
+.packages-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(145deg, #b3d9ff 0%, #fce6b4 100%);
+}
+
+.packages-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.6);
+}
+
+.packages-main {
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.packages-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* کارت درباره ما */
+.package-card {
+    position: absolute;
+    width: 70%;
+    max-width: 900px;
+    min-height: 50vh;  /* کمی کوچکتر از پکیج‌ها */
+    max-height: 70vh;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    border-radius: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    overflow-y: auto;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    z-index: 10;
+}
+
+/* محتوای کارت */
+.package-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    color: #0a1c2f;
+    text-align: center;
+}
+
+.package-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    line-height: 1.3;
+}
+
+.about-text {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    line-height: 1.8;
+    color: #1e2b3a;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 25px 30px;
+    border-radius: 40px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center; /* وسط‌چین */
+    margin: 10px 0;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+}
+
+.about-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* اسکرولبار سفارزی */
+.package-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.package-card::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.package-card::-webkit-scrollbar-thumb {
+    background: rgba(0, 170, 255, 0.5);
+    border-radius: 10px;
+}
+
+.package-card::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 170, 255, 0.8);
+}
+
+/* ===== حالت موبایل عمودی ===== */
+@media (max-width: 768px) and (orientation: portrait) {
+    .package-card {
+        width: 85%;
+        min-height: 45vh;
+        max-height: 65vh;
+        padding: 25px;
+        border-radius: 50px;
+        top: 45%;
+    }
+
+    .package-title {
+        font-size: clamp(1.6rem, 5.5vw, 2rem);
+        margin-bottom: 10px;
+    }
+
+    .about-text {
+        font-size: clamp(0.9rem, 2.8vw, 1rem);
+        padding: 15px 20px;
+    }
+}

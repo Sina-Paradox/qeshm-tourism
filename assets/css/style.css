@@ -13,6 +13,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    text-align: center; /* وسط‌چین کردن تمام متن‌ها */
 }
 
 /* ===== Header ===== */
@@ -195,8 +196,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 250px; /* برای اطمینان از نمایش */
-    background: transparent; /* موقت: rgba(255,0,0,0.1) برای دیباگ */
+    min-height: 250px;
+    background: transparent;
 }
 
 .cards-container {
@@ -261,7 +262,7 @@ body {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.9);
         flex-wrap: wrap;
-        z-index: 100; /* اطمینان از نمایش */
+        z-index: 100;
     }
 
     .card-group.active {
@@ -424,6 +425,7 @@ body {
     backdrop-filter: blur(4px);
     font-size: 16px;
     transition: all 0.2s;
+    text-align: center; /* وسط‌چین برای ورودی‌ها */
 }
 
 .glass-input:focus {
@@ -487,7 +489,7 @@ body {
         font-size: 0.85rem;
     }
 
-    /* صفحه auth در موبایل - انتقال ۲۰٪ به بالا */
+    /* صفحه auth در موبایل */
     .auth-container {
         flex-direction: column;
         padding-top: 70px;

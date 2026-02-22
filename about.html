@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درباره ما | قشم</title>
+    <!-- استایل عمومی -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- استایل اختصاصی درباره ما -->
+    <link rel="stylesheet" href="assets/css/about.css">
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+</head>
+<body class="packages-page"> <!-- استفاده از همان کلاس برای پس‌زمینه و ساختار -->
+
+<header class="header">
+    <button class="auth-btn" onclick="window.location.href='auth.html'">ورود / عضویت</button>
+    <div class="menu-wrapper" id="menuWrapper">
+        <div class="hamburger" id="hamburgerBtn" aria-label="منو">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="dropdown" id="dropdownMenu">
+            <a href="index.html" class="drop-item">خانه</a>
+            <a href="about.html" class="drop-item">درباره ما</a>
+            <a href="#" class="drop-item">پشتیبانی</a>
+        </nav>
+    </div>
+</header>
+
+<main class="packages-main">
+    <div class="packages-container">
+        <!-- تک کارت درباره ما -->
+        <div class="package-card about-card">
+            <div class="package-content">
+                <h2 class="package-title">درباره ما</h2>
+                <div class="about-text">
+                    <p>ما تیمی از علاقه‌مندان به جزیره زیبای قشم هستیم که با هدف ارائه بهترین تجربه سفر برای شما گرد هم آمده‌ایم.</p>
+                    <p>قشم، جزیره شگفتی‌ها، با طبیعت بکر، جاذبه‌های منحصر‌به‌فرد و مردمانی مهمان‌نواز، مقصدی فراموش‌نشدنی برای هر گردشگری است. ما با ارائه اطلاعات دقیق، پکیج‌های متنوع گردشگری و اقامتگاه‌های باکیفیت، همراه شما خواهیم بود تا سفری بی‌دغدغه و لذت‌بخش را تجربه کنید.</p>
+                    <p>از جنگل‌های حرا تا دره ستارگان، از غارهای نمکی تا سواحل نیلگون، همه جا در کنار شما هستیم تا قشم را آنطور که هست کشف کنید.</p>
+                    <p>با ما همراه شوید و خاطراتی بسازید که تا همیشه ماندگار شوند.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<img src="assets/images/hero2.jpg" alt="ساحل قشم" class="packages-bg" loading="lazy">
+
+<!-- اسکریپت‌ها -->
+<script src="assets/js/main.js"></script>
+<!-- about.js حداقل کد را دارد (می‌تواند خالی باشد) -->
+<script src="assets/js/about.js"></script>
+</body>
+</html>
