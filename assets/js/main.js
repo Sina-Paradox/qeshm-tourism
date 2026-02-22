@@ -26,13 +26,13 @@ if (hamburgerBtn && dropdownMenu) {
 const cardsContainer = document.getElementById("cardsContainer");
 let cardItems = document.querySelectorAll('.card-item');
 
-// ===== تشخیص حالت موبایل عمودی =====
-function isMobilePortrait() {
-    return window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
+// ===== تشخیص حالت موبایل (فقط بر اساس عرض) =====
+function isMobile() {
+    return window.innerWidth <= 768;
 }
 
 // ===== حالت دسکتاپ (گروه‌های سه‌تایی افقی با اسکرول عمودی) =====
-if (cardsContainer && !isMobilePortrait()) {
+if (cardsContainer && !isMobile()) {
     // پاک کردن محتوای فعلی و آماده‌سازی برای گروه‌بندی
     const originalCards = Array.from(cardItems);
     cardsContainer.innerHTML = ''; // خالی کردن کانتینر
@@ -46,7 +46,6 @@ if (cardsContainer && !isMobilePortrait()) {
     // توزیع کارت‌ها در گروه‌ها (هر گروه سه کارت)
     originalCards.slice(0, 3).forEach(card => {
         const clonedCard = card.cloneNode(true);
-        // کپی کردن data-link
         clonedCard.dataset.link = card.dataset.link;
         group0.appendChild(clonedCard);
     });
@@ -56,17 +55,14 @@ if (cardsContainer && !isMobilePortrait()) {
         group1.appendChild(clonedCard);
     });
 
-    // اضافه کردن گروه‌ها به کانتینر
     cardsContainer.appendChild(group0);
     cardsContainer.appendChild(group1);
 
-    // دریافت کارت‌های جدید (برای کلیک)
     const newCardItems = document.querySelectorAll('.card-group .card-item');
     
-    // تنظیم گروه فعال اولیه
-    let activeGroup = 0; // 0 برای گروه اول، 1 برای گروه دوم
+    let activeGroup = 0;
     group0.classList.add('active');
-    group1.classList.add('next'); // گروه دوم در پایین آماده
+    group1.classList.add('next');
 
     let isAnimating = false;
 
@@ -77,15 +73,12 @@ if (cardsContainer && !isMobilePortrait()) {
         const currentGroup = activeGroup === 0 ? group0 : group1;
         const nextGroup = newGroup === 0 ? group0 : group1;
 
-        // تنظیم جهت خروج و ورود
         if (newGroup > activeGroup) {
-            // اسکرول به پایین: گروه فعلی به سمت بالا محو شود (prev) و گروه بعدی از پایین بیاید (next)
             currentGroup.classList.remove('active');
             currentGroup.classList.add('prev');
             nextGroup.classList.remove('next');
             nextGroup.classList.add('active');
         } else {
-            // اسکرول به بالا: گروه فعلی به سمت پایین محو شود (next) و گروه قبلی از بالا بیاید (prev)
             currentGroup.classList.remove('active');
             currentGroup.classList.add('next');
             nextGroup.classList.remove('prev');
@@ -95,27 +88,27 @@ if (cardsContainer && !isMobilePortrait()) {
         activeGroup = newGroup;
 
         setTimeout(() => {
-            // پاکسازی کلاس‌های موقت
             [group0, group1].forEach(g => {
                 g.classList.remove('prev', 'next');
             });
             isAnimating = false;
-        }, 500); // مطابق با transition در CSS
+        }, 500);
     }
 
-    // رویداد اسکرول موس
+    // throttle برای اسکرول
+    let scrollTimeout = null;
     window.addEventListener('wheel', (e) => {
         e.preventDefault();
-        if (!isAnimating) {
+        if (!isAnimating && !scrollTimeout) {
             if (e.deltaY > 0 && activeGroup === 0) {
-                updateGroups(1); // برو به گروه دوم
+                updateGroups(1);
             } else if (e.deltaY < 0 && activeGroup === 1) {
-                updateGroups(0); // برگرد به گروه اول
+                updateGroups(0);
             }
+            scrollTimeout = setTimeout(() => scrollTimeout = null, 300);
         }
     }, { passive: false });
 
-    // رویداد لمسی
     let touchStartY = null;
     document.addEventListener('touchstart', (e) => {
         touchStartY = e.touches[0].clientY;
@@ -123,15 +116,16 @@ if (cardsContainer && !isMobilePortrait()) {
 
     document.addEventListener('touchmove', (e) => {
         e.preventDefault();
-        if (!isAnimating && touchStartY !== null) {
+        if (!isAnimating && touchStartY !== null && !scrollTimeout) {
             const deltaY = touchStartY - e.touches[0].clientY;
             if (Math.abs(deltaY) > 20) {
                 if (deltaY > 0 && activeGroup === 0) {
-                    updateGroups(1); // swipe up
+                    updateGroups(1);
                 } else if (deltaY < 0 && activeGroup === 1) {
-                    updateGroups(0); // swipe down
+                    updateGroups(0);
                 }
                 touchStartY = null;
+                scrollTimeout = setTimeout(() => scrollTimeout = null, 300);
             }
         }
     }, { passive: false });
@@ -140,18 +134,23 @@ if (cardsContainer && !isMobilePortrait()) {
         touchStartY = null;
     });
 
-    // کلیدهای صفحه کلید
+    let keyTimeout = null;
     window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
             e.preventDefault();
-            if (activeGroup === 0) updateGroups(1);
+            if (!isAnimating && !keyTimeout && activeGroup === 0) {
+                updateGroups(1);
+                keyTimeout = setTimeout(() => keyTimeout = null, 300);
+            }
         } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
             e.preventDefault();
-            if (activeGroup === 1) updateGroups(0);
+            if (!isAnimating && !keyTimeout && activeGroup === 1) {
+                updateGroups(0);
+                keyTimeout = setTimeout(() => keyTimeout = null, 300);
+            }
         }
     });
 
-    // کلیک روی کارت‌ها (با داده لینک)
     newCardItems.forEach(card => {
         card.addEventListener('click', function() {
             const link = this.dataset.link;
@@ -160,8 +159,8 @@ if (cardsContainer && !isMobilePortrait()) {
     });
 }
 
-// ===== حالت موبایل عمودی (یک کارت) =====
-else if (isMobilePortrait() && cardItems.length > 0) {
+// ===== حالت موبایل =====
+else if (isMobile() && cardItems.length > 0) {
     // تنظیم کلاس‌های اولیه
     cardItems.forEach((card, index) => {
         card.classList.remove('active', 'prev', 'next');
@@ -203,14 +202,17 @@ else if (isMobilePortrait() && cardItems.length > 0) {
         updateCards((currentIndex - 1 + totalCards) % totalCards);
     }
 
-    // اسکرول موس عمودی
+    // throttle
+    let scrollTimeout = null;
     window.addEventListener('wheel', (e) => {
         e.preventDefault();
-        if (e.deltaY > 0) nextCard();
-        else prevCard();
+        if (!isAnimating && !scrollTimeout) {
+            if (e.deltaY > 0) nextCard();
+            else prevCard();
+            scrollTimeout = setTimeout(() => scrollTimeout = null, 300);
+        }
     }, { passive: false });
 
-    // رویداد لمسی
     let touchStartY = null;
     document.addEventListener('touchstart', (e) => {
         touchStartY = e.touches[0].clientY;
@@ -218,12 +220,13 @@ else if (isMobilePortrait() && cardItems.length > 0) {
 
     document.addEventListener('touchmove', (e) => {
         e.preventDefault();
-        if (touchStartY !== null) {
+        if (!isAnimating && touchStartY !== null && !scrollTimeout) {
             const diff = touchStartY - e.touches[0].clientY;
             if (Math.abs(diff) > 20) {
                 if (diff > 0) nextCard();
                 else prevCard();
                 touchStartY = null;
+                scrollTimeout = setTimeout(() => scrollTimeout = null, 300);
             }
         }
     }, { passive: false });
@@ -232,7 +235,6 @@ else if (isMobilePortrait() && cardItems.length > 0) {
         touchStartY = null;
     });
 
-    // کلیک روی کارت
     cardItems.forEach(card => {
         card.addEventListener('click', function() {
             const link = this.dataset.link;
@@ -259,7 +261,11 @@ if (document.querySelector('.auth-page')) {
     });
 }
 
-// ===== تنظیم مجدد در تغییر اندازه صفحه (اختیاری) =====
+// ===== تنظیم مجدد در تغییر اندازه صفحه با debounce =====
+let resizeTimer;
 window.addEventListener('resize', function() {
-    location.reload(); // ساده‌ترین راه برای تطبیق با حالت جدید
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+        location.reload();
+    }, 250);
 });

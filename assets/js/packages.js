@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchStartY = null;
     let touchStartX = null;
     
+    // متغیرهای جمع‌آوری دلتا برای اسکرول
+    let accumulatedDelta = 0;
+    const deltaThreshold = 50; // آستانه حرکت
+    let wheelTimeout = null;
+    
     const totalPackages = packageCards.length;
     
     // تشخیص حالت موبایل عمودی
@@ -16,8 +21,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // ایجاد نشانگر پایین صفحه
     createIndicator();
     
-    // فعال کردن اولین پکیج
-    updatePackages(currentIndex);
+    // تنظیم دستی کلاس‌های اولیه برای نمایش اولین کارت
+    packageCards.forEach((card, index) => {
+        card.classList.remove('active', 'prev', 'next');
+        if (index === 0) {
+            card.classList.add('active');
+        } else if (index === 1) {
+            card.classList.add('next');
+        } else if (index === totalPackages - 1) {
+            card.classList.add('prev');
+        }
+    });
+    currentIndex = 0;
+    updateIndicator();
     
     // ===== توابع کمکی =====
     function createIndicator() {
@@ -78,13 +94,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function nextPackage() {
         if (isAnimating) return;
         const nextIndex = (currentIndex + 1) % totalPackages;
-        goToPackage(nextIndex);
+        updatePackages(nextIndex);
     }
 
     function prevPackage() {
         if (isAnimating) return;
         const prevIndex = (currentIndex - 1 + totalPackages) % totalPackages;
-        goToPackage(prevIndex);
+        updatePackages(prevIndex);
     }
 
     function goToPackage(index) {
@@ -92,53 +108,110 @@ document.addEventListener('DOMContentLoaded', function() {
         updatePackages(index);
     }
 
-    // ===== رویدادهای اسکرول =====
-    // غیرفعال کردن اسکرول عمودی صفحه
-    window.addEventListener('wheel', (e) => {
+    // ===== رویدادهای اسکرول با جمع‌آوری دلتا =====
+    function handleWheel(e) {
         e.preventDefault();
-        if (!isAnimating) {
-            if (e.deltaY > 0) {
+        
+        // اگر انیمیشن در حال اجراست، هیچ کاری نکن
+        if (isAnimating) return;
+        
+        // جمع‌آوری دلتا (با علامت)
+        accumulatedDelta += e.deltaY;
+        
+        // اگر تایمر قبلی وجود دارد، پاکش کن
+        if (wheelTimeout) clearTimeout(wheelTimeout);
+        
+        // بعد از توقف اسکرول (با تأخیر 150ms) دلتا را ریست می‌کنیم
+        wheelTimeout = setTimeout(() => {
+            accumulatedDelta = 0;
+            wheelTimeout = null;
+        }, 150);
+        
+        // اگر مقدار مطلق دلتا از آستانه بیشتر شد، یک حرکت انجام بده
+        if (Math.abs(accumulatedDelta) >= deltaThreshold) {
+            if (accumulatedDelta > 0) {
                 nextPackage();
             } else {
                 prevPackage();
             }
+            // بعد از حرکت، دلتا را ریست می‌کنیم
+            accumulatedDelta = 0;
+            if (wheelTimeout) {
+                clearTimeout(wheelTimeout);
+                wheelTimeout = null;
+            }
         }
-    }, { passive: false });
+    }
 
-    // رویدادهای لمسی (عمودی برای موبایل، افقی برای دسکتاپ)
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    // رویدادهای لمسی (با همان منطق جمع‌آوری دلتا)
+    let touchAccumulatedDelta = 0;
+    let touchTimeout = null;
+    
     document.addEventListener('touchstart', (e) => {
         touchStartY = e.touches[0].clientY;
         touchStartX = e.touches[0].clientX;
+        // ریست دلتای لمسی
+        touchAccumulatedDelta = 0;
+        if (touchTimeout) clearTimeout(touchTimeout);
     }, { passive: false });
 
     document.addEventListener('touchmove', (e) => {
         e.preventDefault();
-        if (!isAnimating && touchStartY !== null && touchStartX !== null) {
-            const deltaY = touchStartY - e.touches[0].clientY;
-            const deltaX = touchStartX - e.touches[0].clientX;
+        if (isAnimating || touchStartY === null || touchStartX === null) return;
+        
+        const deltaY = touchStartY - e.touches[0].clientY;
+        const deltaX = touchStartX - e.touches[0].clientX;
+        
+        if (isMobilePortrait()) {
+            // در موبایل عمودی، محور Y
+            touchAccumulatedDelta += deltaY;
             
-            // در موبایل عمودی، جهت عمودی ملاک است
-            if (isMobilePortrait()) {
-                if (Math.abs(deltaY) > 30) {
-                    if (deltaY > 0) {
-                        nextPackage();
-                    } else {
-                        prevPackage();
-                    }
-                    touchStartY = null;
-                    touchStartX = null;
+            // ریست تایمر
+            if (touchTimeout) clearTimeout(touchTimeout);
+            touchTimeout = setTimeout(() => {
+                touchAccumulatedDelta = 0;
+                touchTimeout = null;
+            }, 150);
+            
+            if (Math.abs(touchAccumulatedDelta) >= deltaThreshold) {
+                if (touchAccumulatedDelta > 0) {
+                    nextPackage();
+                } else {
+                    prevPackage();
                 }
-            } else {
-                // در دسکتاپ (افقی)، جهت افقی ملاک است
-                if (Math.abs(deltaX) > 30) {
-                    if (deltaX > 0) {
-                        nextPackage(); // swipe left
-                    } else {
-                        prevPackage(); // swipe right
-                    }
-                    touchStartY = null;
-                    touchStartX = null;
+                touchAccumulatedDelta = 0;
+                if (touchTimeout) {
+                    clearTimeout(touchTimeout);
+                    touchTimeout = null;
                 }
+                touchStartY = null;
+                touchStartX = null;
+            }
+        } else {
+            // در دسکتاپ (افقی)، محور X
+            touchAccumulatedDelta += deltaX;
+            
+            if (touchTimeout) clearTimeout(touchTimeout);
+            touchTimeout = setTimeout(() => {
+                touchAccumulatedDelta = 0;
+                touchTimeout = null;
+            }, 150);
+            
+            if (Math.abs(touchAccumulatedDelta) >= deltaThreshold) {
+                if (touchAccumulatedDelta > 0) {
+                    nextPackage();
+                } else {
+                    prevPackage();
+                }
+                touchAccumulatedDelta = 0;
+                if (touchTimeout) {
+                    clearTimeout(touchTimeout);
+                    touchTimeout = null;
+                }
+                touchStartY = null;
+                touchStartX = null;
             }
         }
     }, { passive: false });
@@ -146,16 +219,23 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('touchend', () => {
         touchStartY = null;
         touchStartX = null;
+        touchAccumulatedDelta = 0;
+        if (touchTimeout) clearTimeout(touchTimeout);
     });
 
-    // کلیدهای صفحه کلید (عمودی برای همه)
+    // کلیدهای صفحه کلید با throttle ساده
+    let keyTimeout = null;
     window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
             e.preventDefault();
+            if (isAnimating || keyTimeout) return;
             nextPackage();
+            keyTimeout = setTimeout(() => keyTimeout = null, 300);
         } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
             e.preventDefault();
+            if (isAnimating || keyTimeout) return;
             prevPackage();
+            keyTimeout = setTimeout(() => keyTimeout = null, 300);
         }
     });
 
