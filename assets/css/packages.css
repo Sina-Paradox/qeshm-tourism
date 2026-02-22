@@ -256,20 +256,20 @@
     .package-card {
         width: 85%;
         height: auto;
-        min-height: 50vh;
-        max-height: 70vh;
-        padding: 30px;
+        min-height: 45vh;        /* 5% کوچکتر */
+        max-height: 65vh;        /* 5% کوچکتر */
+        padding: 25px;           /* کاهش فاصله داخلی */
         border-radius: 50px;
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        top: 45%;                /* 10% بالاتر */
     }
 
-    /* تغییر جهت انیمیشن به عمودی */
     .package-card.prev {
-        transform: translate(-50%, -150%) scale(0.8);
+        transform: translate(-50%, -160%) scale(0.8); /* تنظیم برای بالاتر */
     }
 
     .package-card.next {
-        transform: translate(-50%, 50%) scale(0.8);
+        transform: translate(-50%, 60%) scale(0.8);   /* تنظیم برای پایین‌تر */
     }
 
     .package-card.active {
@@ -277,17 +277,18 @@
     }
 
     .package-title {
-        font-size: clamp(1.5rem, 6vw, 2rem);
+        font-size: clamp(1.4rem, 5.5vw, 1.9rem);   /* کمی کوچکتر */
+        margin-bottom: 10px;
     }
 
     .package-description {
-        font-size: clamp(0.9rem, 3vw, 1.1rem);
-        padding: 15px;
+        font-size: clamp(0.85rem, 2.8vw, 1rem);    /* کوچکتر */
+        padding: 12px 18px;                        /* کاهش padding */
     }
 
     .package-meta {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
     }
 
     .package-duration,
@@ -295,22 +296,24 @@
         width: 100%;
         text-align: center;
         white-space: normal;
-        font-size: clamp(0.8rem, 2.5vw, 1rem);
+        font-size: clamp(0.75rem, 2.2vw, 0.9rem);  /* کوچکتر */
+        padding: 8px 15px;
     }
 
     .package-btn {
-        padding: 12px 30px;
-        font-size: 1rem;
+        padding: 10px 25px;                         /* کوچکتر */
+        font-size: 0.9rem;
+        margin-top: 10px;
     }
 
     .package-indicator {
         bottom: 15px;
-        padding: 10px 20px;
-        font-size: 0.9rem;
+        padding: 8px 16px;
+        font-size: 0.8rem;
     }
 
     .dot {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
     }
 }
