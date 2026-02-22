@@ -152,11 +152,10 @@ body {
     width: 90%;
 }
 
-/* لوگو - اندازه نصف شد */
 .logo-img {
-    width: min(20%, 140px);  /* کاهش یافته */
+    width: min(20%, 140px);
     height: auto;
-    margin-bottom: 8px;      /* فاصله کمتر */
+    margin-bottom: 8px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -187,28 +186,29 @@ body {
     border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* ===== کارت‌های اسکرول افقی (پیش‌فرض برای دسکتاپ) ===== */
+/* ===== کارت‌های پایین صفحه ===== */
 .scrolling-cards {
     overflow: hidden;
     width: 100%;
-    padding: 20px 0;
     position: relative;
     flex: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
+    min-height: 250px; /* برای اطمینان از نمایش */
+    background: transparent; /* موقت: rgba(255,0,0,0.1) برای دیباگ */
 }
 
 .cards-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
     display: flex;
-    gap: 30px;
-    transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
-    will-change: transform;
-    padding: 0 20px;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-item {
-    min-width: 320px;
-    height: 160px;
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(16px);
     border-radius: 60px;
@@ -217,12 +217,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 600;
     color: white;
     text-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    flex: 0 0 auto;
-    padding: 20px 35px;
     white-space: nowrap;
     user-select: none;
     letter-spacing: 0.5px;
@@ -236,13 +232,70 @@ body {
     border-color: rgba(255,255,255,0.8);
 }
 
-/* ===== حالت موبایل عمودی (کارت‌ها به صورت عمودی ظاهر می‌شوند) ===== */
-@media (max-width: 768px) and (orientation: portrait) {
-    .scrolling-cards {
-        height: 50vh;
+/* ===== حالت دسکتاپ: دو گروه سه‌کارتی افقی ===== */
+@media (min-width: 769px) {
+    .card-item {
+        width: clamp(200px, 30%, 320px);
+        height: clamp(120px, 15vh, 180px);
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        padding: 20px 25px;
+        flex-shrink: 0;
+    }
+
+    .cards-container {
+        display: block;
+    }
+
+    .card-group {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 100%;
         display: flex;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
+        gap: 15px;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+        flex-wrap: wrap;
+        z-index: 100; /* اطمینان از نمایش */
+    }
+
+    .card-group.active {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        pointer-events: all;
+    }
+
+    .card-group.prev {
+        opacity: 0;
+        transform: translate(-50%, -150%) scale(0.8);
+    }
+
+    .card-group.next {
+        opacity: 0;
+        transform: translate(-50%, 50%) scale(0.8);
+    }
+
+    .card-group .card-item {
+        position: static;
+        margin: 0;
+    }
+}
+
+/* ===== حالت موبایل (عرض ≤ 768px) ===== */
+@media (max-width: 768px) {
+    .card-item {
+        width: 70%;
+        height: 60%;
+        min-width: auto;
+        font-size: clamp(1.2rem, 5vw, 2rem);
+        white-space: normal;
+        padding: 20px;
+        text-align: center;
     }
 
     .cards-container {
@@ -257,9 +310,6 @@ body {
 
     .card-item {
         position: absolute;
-        width: 70%;
-        height: 70%;
-        min-width: auto;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%) scale(0.9);
@@ -267,10 +317,6 @@ body {
         visibility: hidden;
         pointer-events: none;
         transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        font-size: clamp(1.2rem, 5vw, 2rem);
-        white-space: normal;
-        padding: 20px;
-        text-align: center;
     }
 
     .card-item.active {
@@ -333,7 +379,7 @@ body {
 }
 
 .auth-left .logo-img {
-    width: min(25%, 150px);   /* نصف شد */
+    width: min(25%, 150px);
     margin-bottom: 10px;
 }
 
@@ -414,11 +460,6 @@ body {
         padding: 10px 24px;
         font-size: 1rem;
     }
-    .card-item {
-        min-width: 280px;
-        height: 140px;
-        font-size: 1.3rem;
-    }
 }
 
 @media (max-width: 768px) {
@@ -446,34 +487,46 @@ body {
         font-size: 0.85rem;
     }
 
-    /* صفحه auth در موبایل */
+    /* صفحه auth در موبایل - انتقال ۲۰٪ به بالا */
     .auth-container {
         flex-direction: column;
         padding-top: 70px;
     }
     .auth-left {
         flex: none;
-        height: 40vh;
-        justify-content: flex-end;
-        padding-bottom: 20px;
+        height: 30vh;
+        justify-content: flex-start;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
     .auth-left .logo-img {
-        width: min(25%, 100px); /* کوچکتر در موبایل */
+        width: min(25%, 100px);
+        margin-bottom: 5px;
+    }
+    .auth-left .english-slogan {
+        font-size: clamp(0.9rem, 2.8vw, 1.2rem);
+        margin-bottom: 3px;
+    }
+    .auth-left .persian-tagline {
+        font-size: clamp(0.75rem, 2.2vw, 1rem);
+        padding: 4px 10px;
     }
     .auth-right {
         flex: none;
-        height: 60vh;
-        justify-content: center;
+        height: 70vh;
+        justify-content: flex-start;
+        padding-top: 10px;
     }
     .glass {
         width: min(380px, 85%);
         padding: 25px 20px;
+        margin-top: 0;
     }
 }
 
 @media (max-width: 480px) {
     .logo-img {
-        width: min(30%, 90px);  /* حتی کوچکتر */
+        width: min(30%, 90px);
     }
     .english-slogan {
         font-size: clamp(0.8rem, 3vw, 1rem);
@@ -481,11 +534,6 @@ body {
     .persian-tagline {
         font-size: clamp(0.65rem, 2vw, 0.9rem);
         padding: 4px 10px;
-    }
-    .card-item {
-        min-width: 220px;
-        height: 120px;
-        font-size: 1.1rem;
     }
     .glass {
         width: min(320px, 90%);

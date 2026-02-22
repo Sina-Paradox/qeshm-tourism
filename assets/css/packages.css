@@ -36,7 +36,7 @@
     align-items: center;
 }
 
-/* کارت پکیج - استایل اصلی */
+/* کارت پکیج - استایل اصلی (پیش‌فرض برای دسکتاپ: افقی) */
 .package-card {
     position: absolute;
     width: 70%;
@@ -62,7 +62,7 @@
     overflow-y: auto;
 }
 
-/* کارت فعال - قابل مشاهده */
+/* کارت فعال */
 .package-card.active {
     opacity: 1;
     visibility: visible;
@@ -71,7 +71,7 @@
     z-index: 10;
 }
 
-/* کارت قبلی - محو شدن به چپ */
+/* کارت قبلی - افقی (برای دسکتاپ) */
 .package-card.prev {
     opacity: 0;
     visibility: visible;
@@ -80,7 +80,7 @@
     z-index: 5;
 }
 
-/* کارت بعدی - محو شدن به راست */
+/* کارت بعدی - افقی (برای دسکتاپ) */
 .package-card.next {
     opacity: 0;
     visibility: visible;
@@ -164,7 +164,7 @@
     box-shadow: 0 10px 20px rgba(0, 170, 255, 0.3);
 }
 
-/* انیمیشن هاور - مشابه کارت‌های صفحه اصلی */
+/* انیمیشن هاور */
 .package-card.active .package-btn:hover {
     background: #0088cc;
     transform: scale(1.05) translateY(-3px);
@@ -232,7 +232,7 @@
     box-shadow: 0 0 15px #00aaff;
 }
 
-/* اسکرولبار سفارشی برای کارت‌ها */
+/* اسکرولبار سفارشی */
 .package-card::-webkit-scrollbar {
     width: 8px;
 }
@@ -251,114 +251,66 @@
     background: rgba(0, 170, 255, 0.8);
 }
 
-/* ===== ریسپانسیو ===== */
-
-/* تبلت */
-@media (max-width: 1024px) {
-    .package-card {
-        width: 80%;
-        padding: 40px;
-        min-height: 55vh;
-    }
-    
-    .package-description {
-        padding: 15px 20px;
-    }
-}
-
-/* موبایل بزرگ */
-@media (max-width: 768px) {
+/* ===== حالت موبایل عمودی ===== */
+@media (max-width: 768px) and (orientation: portrait) {
     .package-card {
         width: 85%;
+        height: auto;
+        min-height: 50vh;
+        max-height: 70vh;
         padding: 30px;
         border-radius: 50px;
-        min-height: 50vh;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    
+
+    /* تغییر جهت انیمیشن به عمودی */
+    .package-card.prev {
+        transform: translate(-50%, -150%) scale(0.8);
+    }
+
+    .package-card.next {
+        transform: translate(-50%, 50%) scale(0.8);
+    }
+
+    .package-card.active {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
     .package-title {
-        font-size: clamp(1.5rem, 4vw, 2rem);
+        font-size: clamp(1.5rem, 6vw, 2rem);
     }
-    
+
+    .package-description {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        padding: 15px;
+    }
+
     .package-meta {
         flex-direction: column;
-        align-items: center;
         gap: 10px;
     }
-    
+
     .package-duration,
     .package-price {
         width: 100%;
         text-align: center;
         white-space: normal;
+        font-size: clamp(0.8rem, 2.5vw, 1rem);
     }
-    
-    .package-indicator {
-        padding: 12px 20px;
-        font-size: 1rem;
-        bottom: 20px;
-    }
-    
-    .dot {
-        width: 10px;
-        height: 10px;
-    }
-}
 
-/* موبایل کوچک */
-@media (max-width: 480px) {
-    .package-card {
-        width: 90%;
-        padding: 25px 20px;
-        border-radius: 40px;
-        min-height: 45vh;
-    }
-    
-    .package-title {
-        font-size: clamp(1.3rem, 3.5vw, 1.6rem);
-    }
-    
-    .package-description {
-        padding: 12px 15px;
-        font-size: 0.95rem;
-        line-height: 1.6;
-    }
-    
     .package-btn {
         padding: 12px 30px;
         font-size: 1rem;
     }
-    
+
     .package-indicator {
-        padding: 10px 15px;
-        font-size: 0.9rem;
         bottom: 15px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
-    
+
     .dot {
         width: 8px;
         height: 8px;
-    }
-}
-
-/* تنظیم ارتفاع برای نمایشگرهای کوتاه */
-@media (max-height: 700px) {
-    .package-card {
-        min-height: 50vh;
-    }
-    
-    .packages-main {
-        margin-top: 70px;
-        height: calc(100vh - 70px);
-    }
-}
-
-@media (max-height: 600px) {
-    .package-card {
-        min-height: 45vh;
-        padding: 30px;
-    }
-    
-    .package-content {
-        gap: 15px;
     }
 }
