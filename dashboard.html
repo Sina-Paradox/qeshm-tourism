@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>داشبورد کاربری | قشم</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+</head>
+<body class="dashboard-page">
+
+<header class="header">
+    <div class="user-header" id="userHeader">
+        <span class="username-display" id="usernameDisplay">کاربر</span>
+        <button class="cart-btn" id="cartBtn" onclick="window.location.href='dashboard.html?tab=cart'">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 22C9.10457 22 10 21.1046 10 20C10 18.8954 9.10457 18 8 18C6.89543 18 6 18.8954 6 20C6 21.1046 6.89543 22 8 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M20 22C21.1046 22 22 21.1046 22 20C22 18.8954 21.1046 18 20 18C18.8954 18 18 18.8954 18 20C18 21.1046 18.8954 22 20 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 2H8L10 16H20L22 6H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </div>
+    <div class="menu-wrapper" id="menuWrapper">
+        <div class="hamburger" id="hamburgerBtn" aria-label="منو">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <nav class="dropdown" id="dropdownMenu">
+            <a href="index.html" class="drop-item">خانه</a>
+            <a href="about.html" class="drop-item">درباره ما</a>
+            <a href="#" class="drop-item">پشتیبانی</a>
+        </nav>
+    </div>
+</header>
+
+<main class="dashboard-main">
+    <div class="dashboard-container">
+        <!-- تب‌های داشبورد -->
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" data-tab="profile">اطلاعات کاربری</button>
+            <button class="tab-btn" data-tab="reservations">رزروهای من</button>
+            <button class="tab-btn" data-tab="cart">سبد خرید</button>
+        </div>
+
+        <!-- بخش اطلاعات کاربری -->
+        <div class="tab-content active" id="profile-tab">
+            <div class="profile-card glass">
+                <h2 class="profile-title">اطلاعات کاربری</h2>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <span class="info-label">نام و نام خانوادگی:</span>
+                        <span class="info-value" id="profile-fullname"></span>
+                        <button class="edit-info-btn" data-field="fullname">ویرایش</button>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">شماره موبایل:</span>
+                        <span class="info-value" id="profile-mobile"></span>
+                        <button class="edit-info-btn" data-field="mobile">ویرایش</button>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">ایمیل:</span>
+                        <span class="info-value" id="profile-email"></span>
+                        <button class="edit-info-btn" data-field="email">ویرایش</button>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">نام کاربری:</span>
+                        <span class="info-value" id="profile-username"></span>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">خروج از حساب</button>
+            </div>
+        </div>
+
+        <!-- بخش رزروهای نهایی شده -->
+        <div class="tab-content" id="reservations-tab">
+            <div class="reservations-card glass">
+                <h2 class="profile-title">رزروهای نهایی شده</h2>
+                <div class="reservations-list" id="reservationsList">
+                    <!-- رزروها با جاوااسکریپت اضافه می‌شوند -->
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش سبد خرید -->
+        <div class="tab-content" id="cart-tab">
+            <div class="cart-card glass">
+                <h2 class="profile-title">سبد خرید</h2>
+                <div class="cart-items" id="cartItems">
+                    <!-- آیتم‌های سبد خرید با جاوااسکریپت اضافه می‌شوند -->
+                </div>
+                <div class="cart-summary">
+                    <div class="total-price">
+                        <span>جمع کل:</span>
+                        <span id="cartTotal">۰ تومان</span>
+                    </div>
+                    <button class="payment-btn" id="paymentBtn">پرداخت از طریق درگاه آنلاین</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<img src="assets/images/hero2.jpg" alt="ساحل قشم" class="dashboard-bg" loading="lazy">
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>
