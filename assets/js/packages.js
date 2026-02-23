@@ -37,6 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ===== توابع کمکی =====
     function createIndicator() {
+        // حذف اندیکاتور قبلی اگر وجود دارد
+        const oldIndicator = document.querySelector('.package-indicator');
+        if (oldIndicator) oldIndicator.remove();
+        
         const indicator = document.createElement('div');
         indicator.className = 'package-indicator';
         indicator.innerHTML = `
@@ -58,7 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function updateIndicator() {
-        document.getElementById('current-package').textContent = currentIndex + 1;
+        const currentPackageEl = document.getElementById('current-package');
+        if (currentPackageEl) {
+            currentPackageEl.textContent = currentIndex + 1;
+        }
         document.querySelectorAll('.dot').forEach((dot, index) => {
             if (index === currentIndex) {
                 dot.classList.add('active');

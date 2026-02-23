@@ -22,28 +22,124 @@ if (hamburgerBtn && dropdownMenu) {
     });
 }
 
+// ===== مدیریت هدر براساس وضعیت ورود =====
+function updateHeaderForAuth() {
+    const authBtn = document.querySelector('.auth-btn');
+    const currentUser = localStorage.getItem('currentUser');
+    
+    if (authBtn) {
+        if (currentUser) {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === currentUser);
+            
+            if (user) {
+                const firstName = user.fullname.split(' ')[0];
+                authBtn.textContent = firstName;
+                authBtn.onclick = function() {
+                    window.location.href = 'dashboard.html';
+                };
+                
+                // ایجاد ساختار جدید هدر برای کاربر وارد شده
+                const header = document.querySelector('.header');
+                
+                // حذف دکمه سبد خرید قبلی اگر وجود دارد
+                const oldCartBtn = document.querySelector('.cart-btn');
+                if (oldCartBtn) {
+                    oldCartBtn.remove();
+                }
+                
+                // ایجاد باکس کاربری جدید
+                const userHeader = document.createElement('div');
+                userHeader.className = 'user-header';
+                
+                // ایجاد دکمه سبد خرید
+                const cartBtn = document.createElement('button');
+                cartBtn.className = 'cart-btn';
+                cartBtn.innerHTML = `
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 22C9.10457 22 10 21.1046 10 20C10 18.8954 9.10457 18 8 18C6.89543 18 6 18.8954 6 20C6 21.1046 6.89543 22 8 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 22C21.1046 22 22 21.1046 22 20C22 18.8954 21.1046 18 20 18C18.8954 18 18 18.8954 18 20C18 21.1046 18.8954 22 20 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 2H8L10 16H20L22 6H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="cart-count" id="headerCartCount">0</span>
+                `;
+                cartBtn.onclick = function() {
+                    window.location.href = 'dashboard.html?tab=cart';
+                };
+                
+                // ایجاد دکمه نام کاربری
+                const usernameSpan = document.createElement('span');
+                usernameSpan.className = 'username-display';
+                usernameSpan.textContent = firstName;
+                usernameSpan.onclick = function() {
+                    window.location.href = 'dashboard.html';
+                };
+                
+                // اضافه کردن المان‌ها به userHeader
+                userHeader.appendChild(usernameSpan);
+                userHeader.appendChild(cartBtn);
+                
+                // جایگزینی دکمه auth با userHeader
+                authBtn.parentNode.replaceChild(userHeader, authBtn);
+                
+                // به‌روزرسانی تعداد سبد خرید
+                const cartCount = user.cart?.length || 0;
+                const headerCartCount = document.getElementById('headerCartCount');
+                if (headerCartCount) {
+                    headerCartCount.textContent = cartCount;
+                    headerCartCount.style.display = cartCount > 0 ? 'flex' : 'none';
+                }
+            } else {
+                localStorage.removeItem('currentUser');
+                resetAuthButton();
+            }
+        } else {
+            resetAuthButton();
+        }
+    }
+}
+
+function resetAuthButton() {
+    const authBtn = document.querySelector('.auth-btn');
+    const userHeader = document.querySelector('.user-header');
+    
+    if (userHeader) {
+        // ایجاد دکمه auth جدید
+        const newAuthBtn = document.createElement('button');
+        newAuthBtn.className = 'auth-btn';
+        newAuthBtn.textContent = 'ورود / عضویت';
+        newAuthBtn.onclick = function() {
+            window.location.href = 'auth.html';
+        };
+        
+        // جایگزینی userHeader با authBtn
+        userHeader.parentNode.replaceChild(newAuthBtn, userHeader);
+    } else if (authBtn) {
+        authBtn.textContent = 'ورود / عضویت';
+        authBtn.onclick = function() {
+            window.location.href = 'auth.html';
+        };
+    }
+}
+
 // ===== دریافت المان‌های کارت =====
 const cardsContainer = document.getElementById("cardsContainer");
 let cardItems = document.querySelectorAll('.card-item');
 
-// ===== تشخیص حالت موبایل (فقط بر اساس عرض) =====
 function isMobile() {
     return window.innerWidth <= 768;
 }
 
-// ===== حالت دسکتاپ (گروه‌های سه‌تایی افقی با اسکرول عمودی) =====
+// ===== حالت دسکتاپ =====
 if (cardsContainer && !isMobile()) {
-    // پاک کردن محتوای فعلی و آماده‌سازی برای گروه‌بندی
     const originalCards = Array.from(cardItems);
-    cardsContainer.innerHTML = ''; // خالی کردن کانتینر
+    cardsContainer.innerHTML = '';
 
-    // ایجاد دو گروه
     const group0 = document.createElement('div');
     group0.className = 'card-group';
     const group1 = document.createElement('div');
     group1.className = 'card-group';
 
-    // توزیع کارت‌ها در گروه‌ها (هر گروه سه کارت)
     originalCards.slice(0, 3).forEach(card => {
         const clonedCard = card.cloneNode(true);
         clonedCard.dataset.link = card.dataset.link;
@@ -95,7 +191,6 @@ if (cardsContainer && !isMobile()) {
         }, 500);
     }
 
-    // throttle برای اسکرول
     let scrollTimeout = null;
     window.addEventListener('wheel', (e) => {
         e.preventDefault();
@@ -134,23 +229,6 @@ if (cardsContainer && !isMobile()) {
         touchStartY = null;
     });
 
-    let keyTimeout = null;
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
-            e.preventDefault();
-            if (!isAnimating && !keyTimeout && activeGroup === 0) {
-                updateGroups(1);
-                keyTimeout = setTimeout(() => keyTimeout = null, 300);
-            }
-        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-            e.preventDefault();
-            if (!isAnimating && !keyTimeout && activeGroup === 1) {
-                updateGroups(0);
-                keyTimeout = setTimeout(() => keyTimeout = null, 300);
-            }
-        }
-    });
-
     newCardItems.forEach(card => {
         card.addEventListener('click', function() {
             const link = this.dataset.link;
@@ -161,7 +239,6 @@ if (cardsContainer && !isMobile()) {
 
 // ===== حالت موبایل =====
 else if (isMobile() && cardItems.length > 0) {
-    // تنظیم کلاس‌های اولیه
     cardItems.forEach((card, index) => {
         card.classList.remove('active', 'prev', 'next');
         if (index === 0) card.classList.add('active');
@@ -202,7 +279,6 @@ else if (isMobile() && cardItems.length > 0) {
         updateCards((currentIndex - 1 + totalCards) % totalCards);
     }
 
-    // throttle
     let scrollTimeout = null;
     window.addEventListener('wheel', (e) => {
         e.preventDefault();
@@ -243,7 +319,7 @@ else if (isMobile() && cardItems.length > 0) {
     });
 }
 
-// ===== رفع مشکل زوم در صفحه auth =====
+// ===== رفع مشکل زوم =====
 if (document.querySelector('.auth-page')) {
     const inputs = document.querySelectorAll('.glass-input');
     inputs.forEach(input => {
@@ -260,3 +336,8 @@ if (document.querySelector('.auth-page')) {
         }
     });
 }
+
+// ===== به‌روزرسانی هدر =====
+document.addEventListener('DOMContentLoaded', function() {
+    updateHeaderForAuth();
+});

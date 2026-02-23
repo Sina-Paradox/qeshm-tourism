@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ورود | عضویت - قشم</title>
+    <title>ورود | قشم</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 </head>
@@ -19,7 +19,7 @@
         </div>
         <nav class="dropdown" id="dropdownMenu">
             <a href="index.html" class="drop-item">خانه</a>
-            <a href="#" class="drop-item">درباره ما</a>
+            <a href="about.html" class="drop-item">درباره ما</a>
             <a href="#" class="drop-item">پشتیبانی</a>
         </nav>
     </div>
@@ -35,15 +35,14 @@
         <div class="login-box glass">
             <input type="text" placeholder="نام کاربری" class="glass-input" id="username">
             <input type="password" placeholder="رمز عبور" class="glass-input" id="password">
-            <button class="glass-btn" onclick="window.location.href='index.html'">ورود</button>
-        </div>
-        <div class="register-box glass">
-            <button class="glass-btn" onclick="window.location.href='auth.html'">عضویت</button>
+            <button class="glass-btn" id="loginBtn">ورود</button>
+            <p class="auth-switch">حساب کاربری ندارید؟ <a href="register.html">عضویت</a></p>
         </div>
     </div>
 </div>
 
 <img src="assets/images/hero2.jpg" alt="ساحل قشم" class="auth-bg" loading="lazy">
 <script src="assets/js/main.js"></script>
+<script src="assets/js/auth.js"></script>
 </body>
 </html>

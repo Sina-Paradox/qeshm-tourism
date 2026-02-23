@@ -1,0 +1,352 @@
+/* ===== صفحه داشبورد ===== */
+.dashboard-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(145deg, #b3d9ff 0%, #fce6b4 100%);
+}
+
+.dashboard-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.6);
+}
+
+.dashboard-main {
+    height: calc(100vh - 80px);
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+}
+
+.dashboard-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* تب‌های داشبورد */
+.dashboard-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 30px;
+    border-radius: 50px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+.tab-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.tab-btn.active {
+    background: #00aaff;
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 5px 20px rgba(0, 170, 255, 0.4);
+}
+
+/* محتوای تب‌ها */
+.tab-content {
+    display: none;
+    height: calc(100% - 70px);
+    overflow-y: auto;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* کارت پروفایل */
+.profile-card, .reservations-card, .cart-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(16px);
+    border-radius: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    padding: 30px;
+    color: #0a1c2f;
+    max-height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.profile-title {
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* اطلاعات کاربری */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.info-label {
+    font-weight: 700;
+    color: #0a1c2f;
+    min-width: 140px;
+}
+
+.info-value {
+    flex: 1;
+    color: #1e2b3a;
+}
+
+.edit-info-btn {
+    background: #00aaff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.edit-info-btn:hover {
+    background: #0088cc;
+    transform: scale(1.05);
+}
+
+.logout-btn {
+    background: rgba(255, 80, 80, 0.8);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 40px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 1.1rem;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 50, 50, 0.9);
+    transform: scale(1.05);
+}
+
+/* لیست رزروها */
+.reservations-list, .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.reservation-item, .cart-item {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+}
+
+.reservation-header, .cart-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.reservation-title, .cart-item-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0a1c2f;
+}
+
+.reservation-type {
+    background: #00aaff;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.reservation-details, .cart-item-details {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    color: #1e2b3a;
+}
+
+.reservation-date, .reservation-price, .cart-item-date, .cart-item-price {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.reservation-status {
+    color: #00aa00;
+    font-weight: 700;
+}
+
+/* آیتم‌های سبد خرید */
+.cart-item-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.edit-date-btn, .remove-item-btn {
+    padding: 8px 20px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-date-btn {
+    background: #00aaff;
+    color: white;
+}
+
+.edit-date-btn:hover {
+    background: #0088cc;
+}
+
+.remove-item-btn {
+    background: rgba(255, 80, 80, 0.8);
+    color: white;
+}
+
+.remove-item-btn:hover {
+    background: rgba(255, 50, 50, 0.9);
+}
+
+/* خلاصه سبد خرید */
+.cart-summary {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.total-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0a1c2f;
+    margin-bottom: 20px;
+}
+
+.payment-btn {
+    background: #00aaff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.payment-btn:hover {
+    background: #0088cc;
+    transform: scale(1.02);
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    .dashboard-main {
+        padding: 10px;
+    }
+    
+    .tab-btn {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+        min-width: 100px;
+    }
+    
+    .profile-card, .reservations-card, .cart-card {
+        padding: 20px;
+    }
+    
+    .profile-title {
+        font-size: 1.4rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .info-label {
+        min-width: auto;
+    }
+    
+    .edit-info-btn {
+        width: 100%;
+    }
+    
+    .reservation-header, .cart-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .reservation-details, .cart-item-details {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .cart-item-actions {
+        flex-direction: column;
+    }
+}
